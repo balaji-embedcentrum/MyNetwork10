@@ -34,7 +34,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Bind(R.id.viewPager)
     ViewPager viewPager;
     private GoogleMap mMap;
+    ParseGeoPoint previousCenterPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,42 +135,56 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             dialog.show();
         } else {
             mMap.setMyLocationEnabled(true);
-            SmartLocation.with(this).location()
-                    .oneFix()
-                    .start(new OnLocationUpdatedListener() {
-                        @Override
-                        public void onLocationUpdated(Location location) {
-                            final double latitude = location.getLatitude();
-                            final double longitude = location.getLongitude();
-                            final LatLng latLng = new LatLng(latitude, longitude);
-                            //mMap.addMarker(new MarkerOptions().position(latLng));
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
-                            Log.d("TAG", "lat: " + latitude + "\n lng: " + longitude);
-                            mMap.clear();
+            /*
+            * USER CASE - (1)
+            * (1) User opens the app, current location is detected, a circle is drawn,
+            *     data is loaded in the list according to the categories and map markers are placed.
+            * */
+            gettingCurrentLocationAndLoadingData();
 
-                            new Thread() {
-                                public void run() {
-                                    try {
-                                        getCircleOptions(latLng);
-                                        getNearByLocation(latitude, longitude);
-                                    } catch (Exception e) {
-                                        Log.d("TAG", "Exception: " + e);
-                                    }
-                                }
-                            }.start();
-                        }
-                    });
             mMap.setOnCameraChangeListener(getCameraChangeListener());
+
             mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
                 public boolean onMyLocationButtonClick() {
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                            new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude()), 13));
+                    /*
+                    * USER CASE - (3)
+                    *  3) By pressing the location button, user should come to UseCase1
+                    * */
+                    gettingCurrentLocationAndLoadingData();
                     return true;
                 }
             });
         }
+    }
+
+    private void gettingCurrentLocationAndLoadingData() {
+        SmartLocation.with(this).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        final double latitude = location.getLatitude();
+                        final double longitude = location.getLongitude();
+                        final LatLng latLng = new LatLng(latitude, longitude);
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+
+                        Log.d("TAG", "lat: " + latitude + "\n lng: " + longitude);
+                        mMap.clear();
+
+                        new Thread() {
+                            public void run() {
+                                try {
+                                    getCircleOptions(latLng);
+                                    getNearByLocation(latitude, longitude);
+                                } catch (Exception e) {
+                                    Log.d("TAG", "Exception: " + e);
+                                }
+                            }
+                        }.start();
+                    }
+                });
     }
 
 
@@ -206,8 +220,48 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onCameraChange(CameraPosition position) {
                 Log.d("tag", "Zoom: " + position.zoom);
-                if (position.zoom < minZoom)
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(minZoom));
+                if (position.zoom <= minZoom) {
+
+                    /*
+                    * USER CASE - (2)
+                    *  2) When the user the user drags it or Zoomout is more than 2km
+                    *     radius from the last location, do the steps as in UseCase1.
+                    * */
+
+                    final double lat = position.target.latitude;
+                    final double lng = position.target.longitude;
+                    final LatLng latLng = new LatLng(lat, lng);
+
+                    ParseGeoPoint currentCenterPoint = new ParseGeoPoint(lat, lng);
+
+                    if (previousCenterPoint != null)
+                        if (currentCenterPoint.distanceInKilometersTo(previousCenterPoint) > 2) {
+                            Log.d("TAG", "onCameraChange: Distance between to center point > 2 KM");
+                            mMap.clear();
+
+                            new Thread() {
+                                public void run() {
+                                    try {
+                                        getCircleOptions(latLng);
+                                        getNearByLocation(lat, lng);
+                                    } catch (Exception e) {
+                                        Log.d("TAG", "Exception: " + e);
+                                    }
+                                }
+                            }.start();
+                        } else {
+                            /*
+                            * USER CASE - (1) 2nd Part
+                            *  1) When Zoom-in no changes in the data or circle,
+                            *     just zoom-in to see the exact streets and roads.
+                            * */
+                            Log.d("TAG", "onCameraChange: Distance between to center point < 2 KM");
+                        }
+                    else {
+                        previousCenterPoint = new ParseGeoPoint(lat, lng);
+                        Log.d("TAG", "onCameraChange: First Time Loaded");
+                    }
+                }
             }
         };
     }
