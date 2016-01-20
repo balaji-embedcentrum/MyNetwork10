@@ -17,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.balaji.mynetwork10.event.GetSelectedLocationEvent;
 import com.balaji.mynetwork10.model.ProfileData;
+import com.balaji.mynetwork10.widget.CustomPagerAdapter;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -44,6 +46,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
@@ -57,11 +60,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ViewPager viewPager;
     private GoogleMap mMap;
     ParseGeoPoint previousCenterPoint;
+    private CustomPagerAdapter customPagerAdapter;
+    private int noOfCategory = 0;
+    ArrayList<String> categoryArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
 
@@ -69,6 +76,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         listenForAddressSearch();
+        prepareCategoryTabs();
+    }
+
+    private void prepareCategoryTabs() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileCategory");
+        query.setLimit(1000);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> categoryList, ParseException e) {
+                if (e == null) {
+                    if (categoryList.size() > 0) {
+                        for (int i = 0; i < categoryList.size(); i++) {
+                            ParseObject p = categoryList.get(i);
+                            Log.d("ParseQuery", "category: " + p.getString("category"));
+                            categoryArrayList.add(p.getString("category"));
+                        }
+                        noOfCategory = categoryList.size();
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 
     private void listenForAddressSearch() {
@@ -139,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             /*
             * USER CASE - (1)
             * (1) User opens the app, current location is detected, a circle is drawn,
-            *     data is loaded in the list according to the categories and map markers are placed.
+            *     categoryArrayList is loaded in the list according to the categories and map markers are placed.
             * */
             gettingCurrentLocationAndLoadingData();
 
@@ -220,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onCameraChange(CameraPosition position) {
                 Log.d("tag", "Zoom: " + position.zoom);
+
                 if (position.zoom <= minZoom) {
 
                     /*
@@ -252,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         } else {
                             /*
                             * USER CASE - (1) 2nd Part
-                            *  1) When Zoom-in no changes in the data or circle,
+                            *  1) When Zoom-in no changes in the categoryArrayList or circle,
                             *     just zoom-in to see the exact streets and roads.
                             * */
                             Log.d("TAG", "onCameraChange: Distance between to center point < 2 KM");
@@ -267,6 +298,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getNearByLocation(double lat, double lng) {
+        final ArrayList<ProfileData> nearByProfileDataArrayList = new ArrayList<>();
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
         query.whereWithinKilometers("profileGeopoint", new ParseGeoPoint(lat, lng), 2);
         query.setLimit(1000);
@@ -276,8 +309,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void done(List<ParseObject> profileList, ParseException e) {
                         if (e == null) {
                             if (profileList.size() > 0) {
-                                final ArrayList<ProfileData> nearByProfileDataArrayList = new ArrayList<>();
-
                                 for (int i = 0; i < profileList.size(); i++) {
                                     ParseObject p = profileList.get(i);
 
@@ -301,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 }
                                 if (nearByProfileDataArrayList.size() > 0) {
                                     addingMarker(nearByProfileDataArrayList);
+
                                     Log.d("TAG", "done: " + nearByProfileDataArrayList.size());
                                 } else
                                     Toast.makeText(MainActivity.this, "No nearby place found.", Toast.LENGTH_SHORT).show();
@@ -308,6 +340,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         } else {
                             Log.d("score", "Error: " + e.getMessage());
                         }
+                        customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), noOfCategory, MainActivity.this, categoryArrayList, nearByProfileDataArrayList);
+                        viewPager.setAdapter(customPagerAdapter);
+                        tabLayout.setupWithViewPager(viewPager);
+                        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                     }
                 }
         );
@@ -319,7 +355,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             for (int i = 0; i < profileDataArrayList.size(); i++) {
                 final ProfileData profileData = profileDataArrayList.get(i);
-                //Log.i("TAG", "Group: " + profileData.getProfileCategory());
                 if (profileData.getProfileGeopoint() != null) {
                     final LatLng latLng = new LatLng(profileData.getProfileGeopoint().getLatitude(),
                             profileData.getProfileGeopoint().getLongitude());
@@ -333,6 +368,50 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     });
                     builder.include(latLng);
                 }
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        EventBus.getDefault().register(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    public void onEvent(GetSelectedLocationEvent event) {
+        if (event.getLocationData().size() > 0) {
+            if (mMap != null) {
+                final LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+                for (int i = 0; i < event.getLocationData().size(); i++) {
+                    final ProfileData profileData = event.getLocationData().get(i);
+                    if (profileData.getProfileGeopoint() != null) {
+                        final LatLng latLng = new LatLng(profileData.getProfileGeopoint().getLatitude(),
+                                profileData.getProfileGeopoint().getLongitude());
+
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                mMap.addMarker(new MarkerOptions().position(latLng).title(profileData.getProfileAddr1()
+                                        + ", " + profileData.getProfileAddr2() + ", " + profileData.getProfileCity()
+                                        + ", " + profileData.getProfileCountry()));
+                            }
+                        });
+                        builder.include(latLng);
+                    }
+                }
+                final LatLngBounds bounds = builder.build();
+                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                    }
+                });
             }
         }
     }
