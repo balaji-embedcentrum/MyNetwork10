@@ -46,7 +46,7 @@ public class CategoryListFragment extends Fragment {
         this.context = context;
 
         this.profileDataArrayList = profileDataArrayList;
-        mAdapter = new MyRecyclerAdapter(getContext());
+        mAdapter = new MyRecyclerAdapter(context);
     }
 
     @Override

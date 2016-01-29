@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Dream\.gradle\caches\modules-2\files-2.1\de.greenrobot\eventbus\2.4.0\ddd166d01b3158d1c00576d29f7ed15c030df719\eventbus-2.4.0.jar"
+        jar="C:\Users\Dream\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.4\695b63d702f505b9b916e02272e3b6381bade7f\gson-2.4.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
-        <dex dex="F:\Development\freelancer_workspace\TopPower - USA\2nd Face\src\MyNetwork10\app\build\intermediates\pre-dexed\debug\eventbus-2.4.0-8fbf9c2b6fbe39e6378061c8f51ac6e51bbe7c0a.jar" />
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="F:\Development\freelancer_workspace\Balaji - USA\2nd Face\src\MyNetwork10\app\build\intermediates\pre-dexed\debug\gson-2.4-ec15055000e40d1f8e21c3a583594d612946a232.jar" />
     </item>
 
 </items>

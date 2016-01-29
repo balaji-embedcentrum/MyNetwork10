@@ -1,5 +1,6 @@
 package com.balaji.mynetwork10.model;
 
+import com.google.gson.Gson;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 
@@ -132,5 +133,10 @@ public class ProfileData {
 
     public void setProfileCategory(String profileCategory) {
         this.profileCategory = profileCategory;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

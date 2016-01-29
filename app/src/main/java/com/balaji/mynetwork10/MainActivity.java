@@ -15,6 +15,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.balaji.mynetwork10.event.GetSelectedLocationEvent;
@@ -52,17 +54,18 @@ import io.nlopez.smartlocation.SmartLocation;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    @Bind(R.id.toolBar)
+    @Bind(R.id.toolbar)
     Toolbar toolBar;
     @Bind(R.id.tabLayout)
     TabLayout tabLayout;
     @Bind(R.id.viewPager)
     ViewPager viewPager;
-    private GoogleMap mMap;
     ParseGeoPoint previousCenterPoint;
+    ArrayList<String> categoryArrayList = new ArrayList<>();
+    private GoogleMap mMap;
     private CustomPagerAdapter customPagerAdapter;
     private int noOfCategory = 0;
-    ArrayList<String> categoryArrayList = new ArrayList<>();
+    private int radiusKm = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +78,49 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        listenForAddressSearch();
-        prepareCategoryTabs();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("AppSettings");
+        query.findInBackground(
+                new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> appSettings, ParseException e) {
+                        if (e == null) {
+                            if (appSettings.size() > 0) {
+                                for (int i = 0; i < appSettings.size(); i++) {
+                                    ParseObject p = appSettings.get(i);
+                                    radiusKm = p.getNumber("radius").intValue();
+                                    Log.d("TAG", "radiusKm: " + p.getNumber("radius"));
+                                }
+                                listenForAddressSearch();
+                                prepareCategoryTabs();
+                            }
+                        } else {
+                            Log.d("score", "Error: " + e.getMessage());
+                        }
+                    }
+                }
+        );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_favorites, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_favorites:
+                Intent i = new Intent(this, FavoritesActivity.class);
+                startActivity(i);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void prepareCategoryTabs() {
@@ -117,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final LatLng latLng = new LatLng(latitude, longitude);
                 mMap.clear();
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 13));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12));
                 new Thread() {
                     public void run() {
                         try {
@@ -198,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         final double latitude = location.getLatitude();
                         final double longitude = location.getLongitude();
                         final LatLng latLng = new LatLng(latitude, longitude);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
                         Log.d("TAG", "lat: " + latitude + "\n lng: " + longitude);
                         mMap.clear();
@@ -220,7 +264,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void getCircleOptions(final LatLng latLng) {
         // circle settings
-        final int radiusM = 2000;// your radius in meters
+        int radiusM = 2000;
+        if (radiusKm != 0)
+            radiusM = radiusKm * 1000;// your radius in meters
 
         // draw circle
         int d = 500; // diameter
@@ -233,19 +279,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // generate BitmapDescriptor from circle Bitmap
         final BitmapDescriptor bmD = BitmapDescriptorFactory.fromBitmap(bm);
 
+        final int finalRadiusM = radiusM;
         MainActivity.this.runOnUiThread(new Runnable() {
             public void run() {
+                mMap.clear();
                 mMap.addGroundOverlay(new GroundOverlayOptions().
                         image(bmD).
-                        position(latLng, radiusM * 2, radiusM * 2).
-                        transparency(0.4f));
+                        position(latLng, finalRadiusM * 2, finalRadiusM * 2).
+                        transparency(0.6f));
             }
         });
     }
 
     public GoogleMap.OnCameraChangeListener getCameraChangeListener() {
         return new GoogleMap.OnCameraChangeListener() {
-            float minZoom = 13.0f;
+            float minZoom = 12.0f;
 
             @Override
             public void onCameraChange(CameraPosition position) {
@@ -300,8 +348,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void getNearByLocation(double lat, double lng) {
         final ArrayList<ProfileData> nearByProfileDataArrayList = new ArrayList<>();
 
+        int withIn = 2;
+        if (radiusKm != 0)
+            withIn = radiusKm;
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
-        query.whereWithinKilometers("profileGeopoint", new ParseGeoPoint(lat, lng), 2);
+        query.addDescendingOrder("profileViews");
+        query.whereWithinKilometers("profileGeopoint", new ParseGeoPoint(lat, lng), withIn);
         query.setLimit(1000);
         query.findInBackground(
                 new FindCallback<ParseObject>() {
@@ -313,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     ParseObject p = profileList.get(i);
 
                                     ProfileData profileData = new ProfileData();
-                                    profileData.setObjectId(p.getString("objectId"));
+                                    profileData.setObjectId(p.getObjectId());
                                     profileData.setUserId(p.getString("userID"));
                                     profileData.setProfileCode(p.getInt("profileCode"));
                                     profileData.setProfileName(p.getString("profileName"));
@@ -361,9 +414,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     MainActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            mMap.addMarker(new MarkerOptions().position(latLng).title(profileData.getProfileAddr1()
-                                    + ", " + profileData.getProfileAddr2() + ", " + profileData.getProfileCity()
-                                    + ", " + profileData.getProfileCountry()));
+                            mMap.addMarker(new MarkerOptions().position(latLng).title(profileData.getProfileName()
+                                    + ", " + profileData.getProfileAddr1() + ", " + profileData.getProfileCity()));
                         }
                     });
                     builder.include(latLng);
@@ -374,7 +426,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onStart() {
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         super.onStart();
     }
 

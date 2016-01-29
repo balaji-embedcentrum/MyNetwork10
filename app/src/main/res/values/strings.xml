@@ -3,4 +3,5 @@
     <string name="gps_network_not_enabled">Please turn on the location to use this application.</string>
     <string name="open_location_settings">Location settings</string>
     <string name="Cancel">Cancel</string>
+    <string name="error_internet_connection">Sorry no internet connection</string>
 </resources>
