@@ -7,6 +7,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +42,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -67,6 +78,12 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     TextView textViewCity;
     @Bind(R.id.textViewZipcode)
     TextView textViewZipcode;
+    @Bind(R.id.imageViewFav)
+    ImageView imageViewFav;
+    @Bind(R.id.textViewDistance)
+    TextView textViewDistance;
+    @Bind(R.id.textViewView)
+    TextView textViewView;
     private ProgressDialog dialog;
     private List<LatLng> pontos;
     private GoogleMap mMap;
@@ -174,7 +191,30 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                                         textViewAddressOne.setText(profileData.getProfileAddr1());
                                         textViewAddressTwo.setText(profileData.getProfileAddr2());
                                         textViewCity.setText(profileData.getProfileCity());
-                                        //textViewZipcode.setText(profileData.getProfileZip());
+                                        DecimalFormat twoForm = new DecimalFormat("#.00");
+                                        double dis = Double.valueOf(twoForm.format(new ParseGeoPoint(latitude, longitude).distanceInKilometersTo(profileData.getProfileGeopoint())));
+
+                                        textViewDistance.setText(dis + " Km");
+//                                        textViewView.setText(" View - " + profileData.getProfileViews());
+                                        textViewView.setVisibility(View.INVISIBLE);
+
+                                        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
+                                        query.whereEqualTo("profileCode", profileData.getProfileCode());
+                                        query.whereEqualTo("userID", Integer.parseInt(profileData.getUserId()));
+                                        query.findInBackground(new FindCallback<ParseObject>() {
+                                            public void done(List<ParseObject> fevList, ParseException e) {
+                                                if (e == null) {
+                                                    Log.d("score", "Retrieved " + fevList.size() + " scores");
+                                                    if (fevList.size() > 0) {
+                                                        imageViewFav.setImageResource(R.drawable.fav_btn_active);
+                                                    } else {
+                                                        imageViewFav.setImageResource(R.drawable.fav_btn_inactive);
+                                                    }
+                                                } else {
+                                                    Log.d("score", "Error: " + e.getMessage());
+                                                }
+                                            }
+                                        });
 
                                         final LatLng start = new LatLng(latitude, longitude);
                                         final LatLng end = new LatLng(profileData.getProfileGeopoint().getLatitude()
@@ -234,13 +274,41 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     public void onEventMainThread(PassProfileDataEvent event) {
         profileData = event.getProfileData();
 
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
+        query.getInBackground(profileData.getObjectId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject profileViews, ParseException e) {
+                if (e == null) {
+                    profileViews.increment("profileViews", 1);
+                    profileViews.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null)
+                                Log.d("TAG", " UPDATED 1");
+                        }
+                    });
+                }
+            }
+        });
+
+        ParseObject gameScore = new ParseObject("ProfileViews");
+        gameScore.put("userID", Integer.parseInt(profileData.getUserId()));
+        gameScore.put("viewType", "regular");
+        gameScore.put("profileCode", profileData.getProfileCode());
+        gameScore.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null)
+                    Log.d("TAG", " UPDATED 2");
+            }
+        });
+
         ReusableClass.saveInPreference("profileDataObj", new Gson().toJson(profileData), DetailsActivity.this);
 
         EventBus.getDefault().removeStickyEvent(event);
     }
 
     public void openingNavigation(double latitude_currrent, double longitude_current, double latitude_destination, double longitude_destination) {
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+        Intent intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?daddr=" + latitude_destination + "," + longitude_destination + ""));
         startActivity(intent);
     }
@@ -252,6 +320,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         if (e != null) {
             //Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Sorry no route found.", Toast.LENGTH_SHORT).show();
+            buttonNavigate.setEnabled(false);
         } else {
             Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
         }
@@ -307,5 +376,65 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    @OnClick(R.id.imageViewFav)
+    public void addingToFav(final View v) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
+        query.whereEqualTo("profileCode", profileData.getProfileCode());
+        query.whereEqualTo("userID", Integer.parseInt(profileData.getUserId()));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> fevList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + fevList.size() + " scores");
+                    if (fevList.size() > 0) {
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
+                        query.whereEqualTo("profileCode", profileData.getProfileCode());
+                        query.whereEqualTo("userID", Integer.parseInt(profileData.getUserId()));
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> invites, ParseException e) {
+                                if (e == null) {
+                                    // iterate over all messages and delete them
+                                    for (ParseObject invite : invites) {
+                                        invite.deleteInBackground();
+                                    }
+                                    Toast.makeText(DetailsActivity.this, "Removed from favorites.", Toast.LENGTH_LONG).show();
+                                    imageViewFav.setImageResource(R.drawable.fav_btn_inactive);
+                                } else {
+                                    Toast.makeText(DetailsActivity.this, "Sorry unable to remove please try again.", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    } else {
+                        ParseObject gameScore = new ParseObject("UserFavorites");
+                        gameScore.put("userID", Integer.parseInt(profileData.getUserId()));
+                        gameScore.put("profileCode", profileData.getProfileCode());
+                        gameScore.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                Log.d("TAG", " UPDATED");
+                                if (e == null) {
+                                    imageViewFav.setImageResource(R.drawable.fav_btn_active);
+                                    Snackbar snackbar = Snackbar
+                                            .make(v, "Added to your Favorites.", Snackbar.LENGTH_LONG)
+                                            .setAction("UNDO", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    imageViewFav.performClick();
+                                                    imageViewFav.setImageResource(R.drawable.fav_btn_inactive);
+                                                }
+                                            });
+                                    snackbar.show();
+                                } else {
+                                    Toast.makeText(DetailsActivity.this, "Sorry unable to undo please try again.", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 }

@@ -32,11 +32,11 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Dream on 13-Dec-15.
  */
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CustomViewHolder> {
+public class MyRecyclerFavoritesAdapter extends RecyclerView.Adapter<MyRecyclerFavoritesAdapter.CustomViewHolder> {
     ArrayList<ProfileData> profileDataArrayList;
     private Context context;
 
-    public MyRecyclerAdapter(Context context) {
+    public MyRecyclerFavoritesAdapter(Context context) {
         this.context = context;
         profileDataArrayList = new ArrayList<>();
     }
@@ -74,8 +74,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
         customViewHolder.textViewProfileView.setText(String.valueOf(profileData.getProfileViews()));
         customViewHolder.textViewAddress.setText(profileData.getProfileAddr1() + ", " +
                 profileData.getProfileCity() + ", " + profileData.getProfileZip());
+        customViewHolder.imageViewFev.setImageResource(R.drawable.fav_btn_active);
 
-        customViewHolder.imageViewFev.setVisibility(View.INVISIBLE);
         customViewHolder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +108,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
                                                 invite.deleteInBackground();
                                             }
                                             Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_LONG).show();
+                                            profileDataArrayList.remove(profileData);
+                                            notifyDataSetChanged();
                                             customViewHolder.imageViewFev.setImageResource(R.drawable.fav_btn_inactive);
                                         } else {
                                             Toast.makeText(context, "Sorry unable to remove please try again.", Toast.LENGTH_LONG).show();
@@ -130,7 +132,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
                                                         @Override
                                                         public void onClick(View view) {
                                                             customViewHolder.imageViewFev.performClick();
-                                                            customViewHolder.imageViewFev.setImageResource(R.drawable.fav_btn_inactive);
                                                         }
                                                     });
                                             snackbar.show();
@@ -145,67 +146,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
                         }
                     }
                 });
-
-
-//                ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
-//                query.getInBackground(profileData.getObjectId(), new GetCallback<ParseObject>() {
-//                    public void done(ParseObject profileViews, ParseException e) {
-//                        if (e == null) {
-//                            profileViews.increment("profileViews");
-//                            profileViews.saveInBackground(new SaveCallback() {
-//                                @Override
-//                                public void done(ParseException e) {
-//                                    Log.d("TAG", " UPDATED");
-//                                    if (e == null) {
-//                                        customViewHolder.textViewProfileView.setText(String.valueOf(profileData.getProfileViews() + 1));
-//                                        customViewHolder.imageViewFev.setImageResource(R.drawable.fav_btn_active);
-//
-//                                        Snackbar snackbar = Snackbar
-//                                                .make(v, "Added to your Favorites.", Snackbar.LENGTH_LONG)
-//                                                .setAction("UNDO", new View.OnClickListener() {
-//                                                    @Override
-//                                                    public void onClick(View view) {
-//                                                        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
-//                                                        query.getInBackground(profileData.getObjectId(), new GetCallback<ParseObject>() {
-//                                                            public void done(ParseObject profileViews, ParseException e) {
-//                                                                if (e == null) {
-//                                                                    profileViews.increment("profileViews", -1);
-//                                                                    profileViews.saveInBackground(new SaveCallback() {
-//                                                                        @Override
-//                                                                        public void done(ParseException e) {
-//                                                                            Log.d("TAG", " UPDATED");
-//                                                                            if (e == null) {
-//                                                                                customViewHolder.imageViewFev.setImageResource(R.drawable.fav_btn_inactive);
-//                                                                                Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_LONG).show();
-//                                                                            } else {
-//                                                                                Toast.makeText(context, "Sorry unable to undo please try again.", Toast.LENGTH_LONG).show();
-//                                                                            }
-//                                                                        }
-//                                                                    });
-//                                                                }
-//                                                            }
-//                                                        });
-//                                                    }
-//                                                });
-//
-//                                        snackbar.show();
-//                                    } else {
-//                                        Snackbar snackbar = Snackbar
-//                                                .make(v, "Sorry try again.", Snackbar.LENGTH_LONG)
-//                                                .setAction("RETRY", new View.OnClickListener() {
-//                                                    @Override
-//                                                    public void onClick(View view) {
-//                                                        customViewHolder.imageViewFev.performClick();
-//                                                    }
-//                                                });
-//
-//                                        snackbar.show();
-//                                    }
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
             }
         });
     }

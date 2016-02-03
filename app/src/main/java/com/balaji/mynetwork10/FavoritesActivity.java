@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.balaji.mynetwork10.model.ProfileData;
-import com.balaji.mynetwork10.widget.MyRecyclerAdapter;
+import com.balaji.mynetwork10.widget.MyRecyclerFavoritesAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -36,7 +36,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     private RecyclerView.LayoutManager mLayoutManager;
-    private MyRecyclerAdapter mAdapter;
+    private MyRecyclerFavoritesAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class FavoritesActivity extends AppCompatActivity {
             }
         });
 
-        mAdapter = new MyRecyclerAdapter(this);
+        mAdapter = new MyRecyclerFavoritesAdapter(this);
         myRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         myRecyclerView.setLayoutManager(mLayoutManager);
@@ -63,11 +63,12 @@ public class FavoritesActivity extends AppCompatActivity {
     private void gettingProfileList() {
         final ArrayList<ProfileData> nearByProfileDataArrayList = new ArrayList<>();
 
-        ParseQuery<ParseObject> queryProfileViews = ParseQuery.getQuery("ProfileViews");
-//        queryProfileViews.whereEqualTo("userID", 1234567890);
+        ParseQuery<ParseObject> queryProfileViews = ParseQuery.getQuery("UserFavorites");
+        queryProfileViews.whereEqualTo("userID", 1234567890);
 
         ParseQuery<ParseObject> queryProfileData = ParseQuery.getQuery("ProfileData");
         queryProfileData.setLimit(1000);
+        queryProfileData.addDescendingOrder("profileViews");
 
         queryProfileData.whereMatchesKeyInQuery("profileCode", "profileCode", queryProfileViews);
         queryProfileData.findInBackground(

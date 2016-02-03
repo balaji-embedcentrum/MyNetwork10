@@ -52,54 +52,111 @@
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textViewName"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        tools:text="Name Name" />
+
+                    <TextView
+                        android:id="@+id/textViewAddressOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/subtext_bg"
+                        android:textSize="18dp"
+                        tools:text="Address one will be here" />
+
+                    <TextView
+                        android:id="@+id/textViewAddressTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/subtext_bg"
+                        android:textSize="18dp"
+                        tools:text="Address two will be here" />
+
+                    <TextView
+                        android:id="@+id/textViewCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/subtext_bg"
+                        android:textSize="18dp"
+                        tools:text="City Name" />
+
+                    <TextView
+                        android:id="@+id/textViewZipcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/subtext_bg"
+                        android:textSize="18dp"
+                        tools:text="Zipcode" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageViewFav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="5dp"
+                    android:text="Favorite"
+                    tools:src="@drawable/fav_btn_active" />
+
+                <TextView
+                    android:id="@+id/textViewDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/round_background_level"
+                    android:gravity="right"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                   android:layout_alignRight="@+id/imageViewFav"
+                    android:layout_below="@+id/imageViewFav"
+                    android:textColor="@android:color/white"
+                    android:textSize="15dp"
                     android:textStyle="bold"
-                    tools:text="Name Name" />
+                    tools:text="301.23 KM" />
 
                 <TextView
-                    android:id="@+id/textViewAddressOne"
+                    android:id="@+id/textViewView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/round_background_level"
+                    android:gravity="right"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/subtext_bg"
-                    android:textSize="18dp"
-                    tools:text="Address one will be here" />
-
-                <TextView
-                    android:id="@+id/textViewAddressTwo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/subtext_bg"
-                    android:textSize="18dp"
-                    tools:text="Address two will be here" />
-
-                <TextView
-                    android:id="@+id/textViewCity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/subtext_bg"
-                    android:textSize="18dp"
-                    tools:text="City Name" />
-
-                <TextView
-                    android:id="@+id/textViewZipcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/subtext_bg"
-                    android:textSize="18dp"
-                    tools:text="Zipcode" />
-            </LinearLayout>
+                    android:layout_alignRight="@+id/imageViewFav"
+                    android:layout_below="@+id/textViewDistance"
+                    android:textColor="@android:color/white"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    tools:text="View - 301"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
 
         </LinearLayout>
 
