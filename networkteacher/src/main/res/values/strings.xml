@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Network Teacher</string>
+    <string name="app_name_uppercase">NETWORK TEACHER</string>
+    <string name="title_activity_main">My Product</string>
+    <string name="title_add_product_main">Add New Product</string>
+    <string name="sign_in">Sign In</string>
+</resources>

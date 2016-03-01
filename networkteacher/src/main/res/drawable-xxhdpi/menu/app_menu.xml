@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_product"
+        android:title="My Product"
+        app:showAsAction="withText|never" />
+    <item
+        android:id="@+id/action_product_archives"
+        android:title="Product Archives"
+        app:showAsAction="withText|never" />
+    <item
+        android:id="@+id/action_my_order"
+        android:title="My Order"
+        app:showAsAction="withText|never" />
+    <!--<item-->
+    <!--android:id="@+id/action_my_membership"-->
+    <!--android:title="My Membership 1"-->
+    <!--app:showAsAction="withText|never" />-->
+    <item
+        android:id="@+id/action_change_pin"
+        android:title="Change Pin"
+        app:showAsAction="withText|never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        app:showAsAction="withText|never" />
+</menu>
