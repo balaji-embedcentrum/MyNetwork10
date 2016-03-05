@@ -2,18 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/media/anirban/Development/Development/freelancer_workspace/Balaji - USA/3rd Face/src/MyNetwork10/networkteacher/build/intermediates/exploded-aar/com.kbeanie/image-chooser-library/1.5.8/jars/classes.jar"
+        jar="/home/anirban/.gradle/caches/modules-2/files-2.1/org.jbundle.util.osgi.wrapped/org.jbundle.util.osgi.wrapped.org.apache.http.client/4.1.2/98c86e42679fe7ac066f6c242e0d14f0bce0bb7c/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="e25282bb04cc37478252c73f004a376be8c97c6a">
-        <dex dex="/media/anirban/Development/Development/freelancer_workspace/Balaji - USA/3rd Face/src/MyNetwork10/networkteacher/build/intermediates/pre-dexed/debug/classes-2252cddaeb556889199aebed46bb272d2256aad6.jar" />
-    </item>
-    <item
-        jar="/home/anirban/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
-        <dex dex="/media/anirban/Development/Development/freelancer_workspace/Balaji - USA/3rd Face/src/MyNetwork10/networkteacher/build/intermediates/pre-dexed/debug/commons-io-2.4-72b172e48beb01aeabf70baab61684bdd0ee8723.jar" />
+        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
+        <dex dex="/media/anirban/Development/Development/freelancer_workspace/Balaji - USA/3rd Face/src/MyNetwork10/networkteacher/build/intermediates/pre-dexed/debug/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2-1ea552c12b0fd514abd775df1ae8db077aed4792.jar" />
     </item>
 
 </items>
