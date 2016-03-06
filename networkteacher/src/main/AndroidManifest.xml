@@ -30,8 +30,7 @@
             android:theme="@style/Login" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".AddNewProductActivity"
             android:label="@string/title_add_product_main" />
@@ -46,14 +45,11 @@
             android:name="com.parse.CLIENT_KEY"
             android:value="MzLsvBassd0zYaFxkBwMAZsKJRlc5OoMVduYGgVK" />
 
-        <activity android:name=".EditProductActivity"></activity>
+        <activity android:name=".EditProductActivity" />
         <activity
-            android:name=".ArchivedProductListActivity"
-            android:label="Archived Products"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ArchivedProductDetailsActivity"
-            android:label="Archived Product Details"></activity>
+            android:name=".ProductDetailsViewActivity"
+            android:label="Archived Product Details" />
+        <activity android:name=".OrderedProductListActivity"></activity>
     </application>
 
 </manifest>

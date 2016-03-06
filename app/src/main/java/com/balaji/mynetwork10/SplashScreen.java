@@ -1,13 +1,10 @@
-package cLoginActivityom.balaji.mynetwork10;
+package com.balaji.mynetwork10;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-
-import com.balaji.mynetwork10.LoginActivity;
-import com.balaji.mynetwork10.R;
 
 
 public class SplashScreen extends AppCompatActivity {

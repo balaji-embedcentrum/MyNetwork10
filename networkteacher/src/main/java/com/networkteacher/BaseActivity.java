@@ -84,8 +84,13 @@ public class BaseActivity extends AppCompatActivity {
                 finish();
                 return true;
             }
-            case R.id.action_product_archives: {
-                Intent i = new Intent(this, ArchivedProductListActivity.class);
+//            case R.id.action_product_archives: {
+//                Intent i = new Intent(this, ArchivedProductListActivity.class);
+//                startActivity(i);
+//                return true;
+//            }
+            case R.id.action_my_order: {
+                Intent i = new Intent(this, OrderedProductListActivity.class);
                 startActivity(i);
                 return true;
             }

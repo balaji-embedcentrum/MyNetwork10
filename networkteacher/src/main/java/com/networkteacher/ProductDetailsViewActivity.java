@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ArchivedProductDetailsActivity extends BaseActivity {
+public class ProductDetailsViewActivity extends BaseActivity {
 
     private static final String TAG = "EditProductActivity";
     @Bind(R.id.ActiveSwitch)

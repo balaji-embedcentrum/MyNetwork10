@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             emailLoginForm.setVisibility(View.INVISIBLE);
             loginProgress.setVisibility(View.VISIBLE);
 
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("OrderData");
             query.whereEqualTo("profileCode", Integer.parseInt(profileCode.getText().toString()));
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> scoreList, ParseException e) {

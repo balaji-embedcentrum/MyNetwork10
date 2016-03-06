@@ -26,6 +26,7 @@ import com.kbeanie.imagechooser.api.ChosenImages;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.networkteacher.models.Product;
+import com.networkteacher.utils.ReusableClass;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -91,7 +92,12 @@ public class EditProductActivity extends BaseActivity implements
         textViewSummery.setText(product.getProductSummary());
         textViewDescription.setText(product.getProductDescription());
         textViewCost.setText("" + product.getProductCost());
-        activeSwitch.setChecked(true);
+        if (product.getProductStatus().equalsIgnoreCase("Active"))
+            activeSwitch.setChecked(true);
+        else
+            activeSwitch.setChecked(false);
+
+
         objectId = product.getObjectId();
 
         if (product.getProductFoto1() != null) {
@@ -223,59 +229,78 @@ public class EditProductActivity extends BaseActivity implements
     }
 
     public void saving(View view) {
+
         final String summery = textViewSummery.getText().toString().trim();
         final String description = textViewDescription.getText().toString().trim();
         final String cost = textViewCost.getText().toString().trim();
         if (validated(summery, description, cost)) {
-            dialog = ProgressDialog.show(this, "Loading", "Please wait...", true);
-
-            ParseQuery query = ParseQuery.getQuery("ProductData");
-            query.whereEqualTo("objectId", objectId);
-            query.setLimit(1);
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("ProductData");
+            query.whereEqualTo("ProfileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", EditProductActivity.this)));
+            query.whereEqualTo("ProductStatus", "Active");
             query.findInBackground(
-                    new FindCallback() {
+                    new FindCallback<ParseObject>() {
                         @Override
-                        public void done(List list, ParseException e) {
-                        }
+                        public void done(List<ParseObject> profileList, ParseException e) {
+                            if (e == null) {
+                                if (profileList.size() == 3 && activeSwitch.isChecked()) {
+                                    Toast.makeText(EditProductActivity.this, "Already 3 activate product displaying.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    dialog = ProgressDialog.show(EditProductActivity.this, "Loading", "Please wait...", true);
 
-                        @Override
-                        public void done(Object o, Throwable throwable) {
-                            List<ParseObject> list = (List<ParseObject>) o;
-                            ParseObject john = list.get(0);
+                                    ParseQuery query = ParseQuery.getQuery("ProductData");
+                                    query.whereEqualTo("objectId", objectId);
+                                    query.setLimit(1);
+                                    query.findInBackground(
+                                            new FindCallback() {
+                                                @Override
+                                                public void done(List list, ParseException e) {
+                                                }
 
-                            for (int i = 0; i < 3; i++) {
-                                String ProductFoto = "ProductFoto" + (i + 1);
-                                if (imageUrl.get(i) == null) {
-                                    if (imageData.get(i) != null) {
-                                        byte[] data = imageData.get(i);
-                                        ParseFile fileObject = new ParseFile(System.currentTimeMillis() + ".jpg", data);
-                                        john.put(ProductFoto, fileObject);
-                                    } else
-                                        john.remove(ProductFoto);
-                                }
+                                                @Override
+                                                public void done(Object o, Throwable throwable) {
+                                                    List<ParseObject> list = (List<ParseObject>) o;
+                                                    ParseObject john = list.get(0);
 
-                                john.put("ProductSummary", summery);
-                                john.put("ProductDescription", description);
-                                john.put("ProductCost", Integer.parseInt(cost));
-                                if (activeSwitch.isChecked())
-                                    john.put("ProductStatus", "Active");
-                                else
-                                    john.put("ProductStatus", "Inactive");
-                                final int finalI = i;
-                                john.saveInBackground(new SaveCallback() {
-                                    public void done(ParseException e) {
-                                        if (e == null) {
-                                            if (finalI == 2) {
-                                                dialog.dismiss();
-                                                Toast.makeText(EditProductActivity.this, "Thanks for updating.", Toast.LENGTH_LONG).show();
-                                                finish();
+                                                    for (int i = 0; i < 3; i++) {
+                                                        String ProductFoto = "ProductFoto" + (i + 1);
+                                                        if (imageUrl.get(i) == null) {
+                                                            if (imageData.get(i) != null) {
+                                                                byte[] data = imageData.get(i);
+                                                                ParseFile fileObject = new ParseFile(System.currentTimeMillis() + ".jpg", data);
+                                                                john.put(ProductFoto, fileObject);
+                                                            } else
+                                                                john.remove(ProductFoto);
+                                                        }
+
+                                                        john.put("ProductSummary", summery);
+                                                        john.put("ProductDescription", description);
+                                                        john.put("ProductCost", Integer.parseInt(cost));
+                                                        if (activeSwitch.isChecked())
+                                                            john.put("ProductStatus", "Active");
+                                                        else
+                                                            john.put("ProductStatus", "Inactive");
+                                                        final int finalI = i;
+                                                        john.saveInBackground(new SaveCallback() {
+                                                            public void done(ParseException e) {
+                                                                if (e == null) {
+                                                                    if (finalI == 2) {
+                                                                        dialog.dismiss();
+                                                                        Toast.makeText(EditProductActivity.this, "Thanks for updating.", Toast.LENGTH_LONG).show();
+                                                                        finish();
+                                                                    }
+                                                                } else {
+                                                                    Log.d(TAG, "error saving image: " + e);
+                                                                    dialog.dismiss();
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
                                             }
-                                        } else {
-                                            Log.d(TAG, "error saving image: " + e);
-                                            dialog.dismiss();
-                                        }
-                                    }
-                                });
+                                    );
+                                }
+                            } else {
+                                Log.d("score", "Error: " + e.getMessage());
                             }
                         }
                     }

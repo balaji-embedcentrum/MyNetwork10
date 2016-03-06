@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.networkteacher.MainActivity">
+    tools:context="com.networkteacher.OrderedProductListActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
@@ -19,5 +19,4 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>
