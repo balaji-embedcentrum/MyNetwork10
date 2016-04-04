@@ -251,6 +251,15 @@ public class AddNewProductActivity extends BaseActivity implements
                         }
                     });
 
+                    addNewImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(AddNewProductActivity.this, FullScreenImageActivity.class);
+                            i.putExtra("imageUrl", image.getFilePathOriginal());
+                            AddNewProductActivity.this.startActivity(i);
+                        }
+                    });
+
                     LinearLayoutImageList.addView(myView, 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                     addedImage = addedImage + 1;
 

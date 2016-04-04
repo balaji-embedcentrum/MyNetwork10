@@ -2,14 +2,11 @@ package com.networkteacher;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,11 +17,6 @@ import com.google.gson.Gson;
 import com.networkteacher.SelectPhotoUtils.AlbumStorageDirFactory;
 import com.networkteacher.models.Product;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -91,63 +83,20 @@ public class ProductDetailsViewActivity extends BaseActivity {
             LinearLayoutImageList.addView(myView, 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             addedImage = addedImage + 1;
 
+            addNewImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(ProductDetailsViewActivity.this, FullScreenImageActivity.class);
+                    i.putExtra("imageUrl", productFotoUrl);
+                    ProductDetailsViewActivity.this.startActivity(i);
+                }
+            });
+
             Glide.with(this).load(productFotoUrl)
                     .centerCrop()
                     .placeholder(R.drawable.add_image_active)
                     .crossFade()
                     .into(addNewImage);
-
-            new MyAsync().execute(productFotoUrl);
-        }
-    }
-
-    private boolean validated(String summery, String description, String cost) {
-        if (TextUtils.isEmpty(summery)) {
-            SummeryWrapper.setError("Summery name cannot be empty");
-            textViewSummery.requestFocus();
-            return false;
-        }
-        if (TextUtils.isEmpty(description)) {
-            DescriptionWrapper.setError("Description cannot be empty");
-            textViewDescription.requestFocus();
-            return false;
-        }
-        if (TextUtils.isEmpty(cost)) {
-            CostWrapper.setError("Cost cannot be empty");
-            textViewCost.requestFocus();
-            return false;
-        }
-        return true;
-    }
-
-    public class MyAsync extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-
-            try {
-                URL url = new URL(params[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-                imageData.add(stream.toByteArray());
-                return myBitmap;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bmp) {
-
-
         }
     }
 }

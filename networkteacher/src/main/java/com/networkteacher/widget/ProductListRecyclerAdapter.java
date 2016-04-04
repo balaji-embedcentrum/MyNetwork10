@@ -77,6 +77,12 @@ public class ProductListRecyclerAdapter extends RecyclerView.Adapter<ProductList
                     .placeholder(R.drawable.placeholder)
                     .crossFade()
                     .into(customViewHolder.imageViewBackGround);
+        else {
+            // make sure Glide doesn't load anything into this view until told otherwise
+            Glide.clear(customViewHolder.imageViewBackGround);
+            // remove the placeholder (optional); read comments below
+            customViewHolder.imageViewBackGround.setImageDrawable(null);
+        }
 
         customViewHolder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override

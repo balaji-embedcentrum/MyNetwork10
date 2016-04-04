@@ -166,6 +166,16 @@ public class EditProductActivity extends BaseActivity implements
                 }
             });
 
+            addNewImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(EditProductActivity.this, FullScreenImageActivity.class);
+                    i.putExtra("imageUrl", productFotoUrl);
+                    EditProductActivity.this.startActivity(i);
+                }
+            });
+
+
             LinearLayoutImageList.addView(myView, 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
             Glide.with(this).load(productFotoUrl)
@@ -369,6 +379,15 @@ public class EditProductActivity extends BaseActivity implements
                                                     }
                                                 })
                                                 .setNegativeButton(android.R.string.no, null).show();
+                                    }
+                                });
+
+                                addNewImage.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent i = new Intent(EditProductActivity.this, FullScreenImageActivity.class);
+                                        i.putExtra("imageUrl", image.getFilePathOriginal());
+                                        EditProductActivity.this.startActivity(i);
                                     }
                                 });
 

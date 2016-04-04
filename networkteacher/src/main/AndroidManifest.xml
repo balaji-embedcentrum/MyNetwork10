@@ -49,7 +49,10 @@
         <activity
             android:name=".ProductDetailsViewActivity"
             android:label="Archived Product Details" />
-        <activity android:name=".OrderedProductListActivity"></activity>
+        <activity android:name=".OrderedProductListActivity" />
+        <activity
+            android:name=".FullScreenImageActivity"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

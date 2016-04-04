@@ -1,17 +1,22 @@
 package com.networkteacher;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.networkteacher.models.Product;
 import com.networkteacher.utils.ReusableClass;
 import com.networkteacher.widget.ArchivedProductListRecyclerAdapter;
@@ -40,16 +45,16 @@ public class ArchivedProductsFragment extends Fragment {
     TextView textViewNoData;
     @Bind(R.id.progress_container)
     LinearLayout progressContainer;
-//    @Bind(R.id.imageViewBackProduct)
-//    ImageView imageViewBackProduct;
-//    @Bind(R.id.ImageViewCall)
-//    ImageView ImageViewCall;
-//    @Bind(R.id.textViewAddress)
-//    TextView textViewAddress;
-//    @Bind(R.id.textViewDescription)
-//    TextView textViewDescription;
-//    @Bind(R.id.textViewCost)
-//    TextView textViewCost;
+    @Bind(R.id.imageViewBackProduct)
+    ImageView imageViewBackProduct;
+    @Bind(R.id.ImageViewCall)
+    ImageView ImageViewCall;
+    @Bind(R.id.textViewAddress)
+    TextView textViewAddress;
+    @Bind(R.id.textViewDescription)
+    TextView textViewDescription;
+    @Bind(R.id.textViewCost)
+    TextView textViewCost;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArchivedProductListRecyclerAdapter mAdapter;
 
@@ -64,50 +69,78 @@ public class ArchivedProductsFragment extends Fragment {
 
         mAdapter = new ArchivedProductListRecyclerAdapter(getContext());
         myRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
         myRecyclerView.setLayoutManager(mLayoutManager);
         myRecyclerView.setAdapter(mAdapter);
 
-        //addingHeaderData();
+        ImageViewCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ImageViewCall.getTag() != null) {
+                    Intent dial = new Intent();
+                    dial.setAction("android.intent.action.DIAL");
+                    dial.setData(Uri.parse("tel:" + ImageViewCall.getTag()));
+                    startActivity(dial);
+                } else
+                    Toast.makeText(getContext(), "No no available.", Toast.LENGTH_LONG).show();
+            }
+        });
+        addingHeaderData();
         return rootView;
     }
 
-//    private void addingHeaderData() {
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
-//        query.whereEqualTo("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", getContext())));
-//        query.findInBackground(
-//                new FindCallback<ParseObject>() {
-//                    @Override
-//                    public void done(List<ParseObject> profileList, ParseException e) {
-//                        if (e == null) {
-//                            if (profileList.size() > 0) {
-//                                for (int i = 0; i < profileList.size(); i++) {
-//                                    ParseObject p = profileList.get(i);
-//
-//                                    textViewAddress.setText(p.getString("profileAddr1") + ", "
-//                                            + p.getString("profileAddr2") + ", "
-//                                            + p.getString("prfileCity") + ", Zip-"
-//                                            + p.getString("prfileZip"));
-//                                    ImageViewCall.setTag(p.getString("prfilePhone"));
-//
-////                                    if (!p.getString("prfileImage").equalsIgnoreCase(""))
-////                                        Glide.with(getContext()).load(p.getString("prfileImage"))
-////                                                .centerCrop()
-////                                                .placeholder(R.drawable.placeholder)
-////                                                .crossFade()
-////                                                .into(imageViewBackProduct);
-//
-//                                }
-//                            } else {
-//                                Log.d(TAG, "done: No Value");
-//                            }
-//                        } else {
-//                            Log.d("score", "Error: " + e.getMessage());
-//                        }
-//                    }
-//                }
-//        );
-//    }
+    private void addingHeaderData() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
+        query.whereEqualTo("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", getContext())));
+        query.findInBackground(
+                new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> profileList, ParseException e) {
+                        if (e == null) {
+                            if (profileList.size() > 0) {
+                                for (int i = 0; i < profileList.size(); i++) {
+                                    ParseObject p = profileList.get(i);
+
+                                    String address = "";
+                                    if (p.getString("profileAddr1") != null)
+                                        address = p.getString("profileAddr1");
+                                    if (p.getString("profileAddr2") != null)
+                                        address = address + ", " + p.getString("profileAddr2");
+                                    if (p.getString("profileCity") != null)
+                                        address = address + ", " + p.getString("profileCity");
+                                    if (p.getString("profileZip") != null)
+                                        address = address + ", " + p.getString("profileZip");
+                                    if (p.getString("profileState") != null)
+                                        address = address + ", " + p.getString("profileState");
+                                    if (p.getString("profileCountry") != null)
+                                        address = address + ", " + p.getString("profileCountry");
+
+                                    textViewAddress.setText(address);
+                                    ImageViewCall.setTag(p.getString("profilePhone"));
+
+                                    if (p.getParseFile("profileImage").getUrl() != null)
+                                        Glide.with(getContext()).load(p.getParseFile("profileImage").getUrl())
+                                                .centerCrop()
+                                                .placeholder(R.drawable.placeholder)
+                                                .crossFade()
+                                                .into(imageViewBackProduct);
+
+                                    if (p.getNumber("profileViews") != null)
+                                        textViewCost.setText("View - " + p.getNumber("profileViews"));
+                                    else
+                                        textViewCost.setText("View - 0");
+
+                                }
+                            } else {
+                                Log.d(TAG, "done: No Value");
+                            }
+                        } else {
+                            Log.d("score", "Error: " + e.getMessage());
+                        }
+                    }
+                }
+        );
+    }
 
     @Override
     public void onResume() {
