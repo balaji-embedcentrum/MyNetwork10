@@ -32,14 +32,14 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 if (!ReusableClass.getFromPreference("session", SplashScreen.this).equalsIgnoreCase("")) {
                     Intent i = new Intent(SplashScreen.this, MainActivity.class);
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    overridePendingTransition(R.anim.fade_in_anim, R.anim.fade_out_anim);
                     startActivity(i);
                     finish();
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(SplashScreen.this, LoginActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    overridePendingTransition(R.anim.fade_in_anim, R.anim.fade_out_anim);
                     finish();
                 }
             }
