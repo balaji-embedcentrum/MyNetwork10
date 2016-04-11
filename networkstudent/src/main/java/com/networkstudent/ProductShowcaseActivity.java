@@ -1,0 +1,241 @@
+package com.networkstudent;
+
+import android.content.Intent;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.networkstudent.model.Product;
+import com.networkstudent.widget.ArchivedProductListRecyclerAdapter;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+
+public class ProductShowcaseActivity extends BaseActivity {
+
+    private static final String TAG = "MyTAG";
+    @Bind(R.id.my_recycler_view)
+    RecyclerView myRecyclerView;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.textViewNoData)
+    TextView textViewNoData;
+    @Bind(R.id.progress_container)
+    LinearLayout progressContainer;
+    @Bind(R.id.imageViewBackProduct)
+    ImageView imageViewBackProduct;
+    @Bind(R.id.ImageViewCall)
+    ImageView ImageViewCall;
+    @Bind(R.id.textViewAddress)
+    TextView textViewAddress;
+    @Bind(R.id.textViewDescription)
+    TextView textViewDescription;
+    @Bind(R.id.textViewCost)
+    TextView textViewCost;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArchivedProductListRecyclerAdapter mAdapter;
+    private String profileCode;
+    private ParseGeoPoint latLngTo;
+    private Location latLngFrom;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_product_showcase);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (latLngFrom != null && latLngTo != null)
+                    openingNavigation(latLngFrom.getLatitude(), latLngFrom.getLongitude(), latLngTo.getLatitude(), latLngTo.getLongitude());
+            }
+        });
+        profileCode = getIntent().getStringExtra("profileCode");
+        mAdapter = new ArchivedProductListRecyclerAdapter(this);
+        myRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new GridLayoutManager(this, 2);
+        myRecyclerView.setLayoutManager(mLayoutManager);
+        myRecyclerView.setAdapter(mAdapter);
+
+        ImageViewCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ImageViewCall.getTag() != null) {
+                    Intent dial = new Intent();
+                    dial.setAction("android.intent.action.DIAL");
+                    dial.setData(Uri.parse("tel:" + ImageViewCall.getTag()));
+                    startActivity(dial);
+                } else
+                    Toast.makeText(ProductShowcaseActivity.this, "No no available.", Toast.LENGTH_LONG).show();
+            }
+        });
+        addingHeaderData();
+
+        SmartLocation.with(this).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        latLngFrom = location;
+                    }
+                });
+    }
+
+    public void openingNavigation(double latitude_currrent, double longitude_current, double latitude_destination, double longitude_destination) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?daddr=" + latitude_destination + "," + longitude_destination + ""));
+        startActivity(intent);
+    }
+
+    private void addingHeaderData() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
+        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
+        query.findInBackground(
+                new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> profileList, ParseException e) {
+                        if (e == null) {
+                            if (profileList.size() > 0) {
+                                for (int i = 0; i < profileList.size(); i++) {
+                                    ParseObject p = profileList.get(i);
+
+                                    String address = "";
+                                    if (p.getString("profileAddr1") != null)
+                                        address = p.getString("profileAddr1");
+                                    if (p.getString("profileAddr2") != null)
+                                        address = address + ", " + p.getString("profileAddr2");
+                                    if (p.getString("profileCity") != null)
+                                        address = address + ", " + p.getString("profileCity");
+                                    if (p.getString("profileZip") != null)
+                                        address = address + ", " + p.getString("profileZip");
+                                    if (p.getString("profileState") != null)
+                                        address = address + ", " + p.getString("profileState");
+                                    if (p.getString("profileCountry") != null)
+                                        address = address + ", " + p.getString("profileCountry");
+
+                                    latLngTo = p.getParseGeoPoint("profileGeopoint");
+                                    textViewAddress.setText(address);
+                                    ImageViewCall.setTag(p.getString("profilePhone"));
+
+                                    if (p.getParseFile("profileImage") != null) {
+                                        if (p.getParseFile("profileImage").getUrl() != null)
+                                            Glide.with(ProductShowcaseActivity.this).load(p.getParseFile("profileImage").getUrl())
+                                                    .centerCrop()
+                                                    .placeholder(R.drawable.placeholder)
+                                                    .crossFade()
+                                                    .into(imageViewBackProduct);
+                                    }
+                                    if (p.getNumber("profileViews") != null)
+                                        textViewCost.setText("View - " + p.getNumber("profileViews"));
+                                    else
+                                        textViewCost.setText("View - 0");
+
+                                }
+                            } else {
+                                Log.d(TAG, "done: No Value");
+                            }
+                        } else {
+                            Log.d("score", "Error: " + e.getMessage());
+                        }
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        textViewNoData.setVisibility(View.INVISIBLE);
+        progressContainer.setVisibility(View.VISIBLE);
+        loadData();
+    }
+
+    private void loadData() {
+        final ArrayList<Product> productArrayList = new ArrayList<>();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProductData");
+        query.whereEqualTo("ProfileCode", Integer.parseInt(profileCode));
+        query.whereEqualTo("ProductStatus", "Active");
+        query.findInBackground(
+                new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> profileList, ParseException e) {
+                        if (e == null) {
+                            if (profileList.size() > 0) {
+                                for (int i = 0; i < profileList.size(); i++) {
+                                    ParseObject p = profileList.get(i);
+
+                                    Log.d(TAG, "done: " + p.getString("ProductDescription"));
+                                    Product product = new Product();
+                                    product.setObjectId(p.getObjectId());
+                                    product.setProductDescription(p.getString("ProductDescription"));
+                                    product.setProductStatus(p.getString("ProductStatus"));
+                                    product.setProductSummary(p.getString("ProductSummary"));
+                                    product.setProductStatus(p.getString("ProductStatus"));
+                                    product.setProductCost(p.getInt("ProductCost"));
+                                    product.setObjectId(p.getObjectId());
+                                    if (p.getParseFile("ProductFoto1") != null)
+                                        product.setProductFoto1(p.getParseFile("ProductFoto1").getUrl().toString());
+                                    if (p.getParseFile("ProductFoto2") != null)
+                                        product.setProductFoto2(p.getParseFile("ProductFoto2").getUrl().toString());
+                                    if (p.getParseFile("ProductFoto3") != null)
+                                        product.setProductFoto3(p.getParseFile("ProductFoto3").getUrl().toString());
+
+                                    productArrayList.add(product);
+                                }
+                                mAdapter.addAll(productArrayList);
+                            } else {
+                                Log.d(TAG, "done: No Value");
+                                textViewNoData.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            Log.d("score", "Error: " + e.getMessage());
+                        }
+                        progressContainer.setVisibility(View.INVISIBLE);
+                    }
+                }
+        );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+}

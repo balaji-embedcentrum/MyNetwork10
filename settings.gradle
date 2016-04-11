@@ -1,1 +1,1 @@
-include ':app', ':networkteacher'
+include ':app', ':networkteacher', ':networkstudent'

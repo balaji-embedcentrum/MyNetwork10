@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_favorite"
+        android:name="My Favorites"
+        android:title="My Favorites"
+        app:showAsAction="withText|never" />
+    <item
+        android:id="@+id/action_my_order"
+        android:title="My Order"
+        app:showAsAction="withText|never" />
+    <!--<item-->
+    <!--android:id="@+id/action_edit_profile"-->
+    <!--android:title="Edit Profile"-->
+    <!--app:showAsAction="withText|never" />-->
+    <!--<item-->
+    <!--android:id="@+id/action_change_password"-->
+    <!--android:title="Change Password"-->
+    <!--app:showAsAction="withText|never" />-->
+    <item
+        android:id="@+id/action_change_pin"
+        android:title="Change Pin"
+        app:showAsAction="withText|never" />
+    <!--<item-->
+    <!--android:id="@+id/action_data_usage"-->
+    <!--android:title="Data Usage"-->
+    <!--app:showAsAction="withText|never" />-->
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        app:showAsAction="withText|never" />
+</menu>
