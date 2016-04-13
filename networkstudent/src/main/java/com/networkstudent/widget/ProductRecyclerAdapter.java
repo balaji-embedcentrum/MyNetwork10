@@ -29,11 +29,11 @@ import java.util.List;
 /**
  * Created by Dream on 13-Dec-15.
  */
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CustomViewHolder> {
+public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.CustomViewHolder> {
     ArrayList<ProfileData> profileDataArrayList;
     private Context context;
 
-    public MyRecyclerAdapter(Context context) {
+    public ProductRecyclerAdapter(Context context) {
         this.context = context;
         profileDataArrayList = new ArrayList<>();
     }
@@ -72,7 +72,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
         customViewHolder.textViewAddress.setText(profileData.getProfileAddr1() + ", " +
                 profileData.getProfileCity() + ", " + profileData.getProfileZip());
 
-        customViewHolder.imageViewFev.setVisibility(View.INVISIBLE);
+        customViewHolder.imageViewFev.setVisibility(View.GONE);
         customViewHolder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

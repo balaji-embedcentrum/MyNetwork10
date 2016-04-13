@@ -73,9 +73,9 @@ public class BaseActivity extends AppCompatActivity {
 //                return true;
 //            }
             case R.id.action_my_order: {
-//                Intent i = new Intent(this, OrderedProductListActivity.class);
-//                startActivity(i);
-//                return true;
+                Intent i = new Intent(this, OrderedProductListActivity.class);
+                startActivity(i);
+                return true;
             }
         }
 

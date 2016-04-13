@@ -73,6 +73,14 @@
             android:name=".FavoritesActivity"
             android:label="Favorites"
             android:theme="@style/AppThemeToolBar" />
+        <activity
+            android:name=".OrderedProductListActivity"
+            android:label="Order Lists"
+            android:theme="@style/AppThemeToolBar" />
+        <activity
+            android:name=".ProductDetailsViewActivity"
+            android:label="Product Details"
+            android:theme="@style/AppThemeToolBar" />
     </application>
 
 </manifest>

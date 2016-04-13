@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.networkstudent.model.ProfileData;
-import com.networkstudent.widget.MyRecyclerAdapter;
+import com.networkstudent.widget.ProductRecyclerAdapter;
 
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ public class CategoryListFragment extends Fragment {
     @Bind(R.id.textViewNoData)
     TextView textViewNoData;
     private RecyclerView.LayoutManager mLayoutManager;
-    private MyRecyclerAdapter mAdapter;
+    private ProductRecyclerAdapter mAdapter;
 
     String categoryName;
     Context context;
@@ -46,7 +46,7 @@ public class CategoryListFragment extends Fragment {
         this.context = context;
 
         this.profileDataArrayList = profileDataArrayList;
-        mAdapter = new MyRecyclerAdapter(context);
+        mAdapter = new ProductRecyclerAdapter(context);
     }
 
     @Override

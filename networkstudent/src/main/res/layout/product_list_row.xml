@@ -34,7 +34,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewName"
+                    android:id="@+id/textViewSummery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
@@ -44,7 +44,7 @@
                     tools:text="Name Name" />
 
                 <TextView
-                    android:id="@+id/textViewAddress"
+                    android:id="@+id/textViewDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/subtext_bg"
@@ -59,30 +59,28 @@
                 android:gravity="right"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageViewFev"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="end"
-                    android:padding="2dp"
-                    android:src="@drawable/fav_btn_inactive"
-                    android:textColor="@color/red"
-                    android:textSize="12dp"
-                    android:textStyle="bold"
-                    tools:text="View - 301" />
+                <!--<ImageView-->
+                <!--android:id="@+id/imageViewFev"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:background="?android:attr/selectableItemBackground"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true"-->
+                <!--android:gravity="end"-->
+                <!--android:padding="2dp"-->
+                <!--android:src="@drawable/fav_btn_inactive"-->
+                <!--android:textColor="@color/red"-->
+                <!--android:textSize="12dp"-->
+                <!--android:textStyle="bold"-->
+                <!--tools:text="View - 301" />-->
 
                 <TextView
-                    android:id="@+id/textViewProfileView"
+                    android:id="@+id/textViewCost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:background="@drawable/round_background_level"
-                    android:ellipsize="end"
                     android:gravity="right"
-                    android:maxLines="1"
                     android:paddingBottom="1dp"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
@@ -90,7 +88,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="12dp"
                     android:textStyle="bold"
-                    tools:text="301" />
+                    tools:text="$32" />
             </LinearLayout>
 
         </LinearLayout>
