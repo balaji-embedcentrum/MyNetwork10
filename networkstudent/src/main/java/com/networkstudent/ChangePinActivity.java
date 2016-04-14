@@ -3,7 +3,6 @@ package com.networkstudent;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,7 +23,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ChangePinActivity extends AppCompatActivity {
+public class ChangePinActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;

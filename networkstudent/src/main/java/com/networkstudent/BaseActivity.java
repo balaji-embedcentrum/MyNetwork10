@@ -56,12 +56,16 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+            case R.id.action_home: {
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                return true;
+            }
             case R.id.action_favorite: {
                 Intent i = new Intent(this, FavoritesActivity.class);
                 startActivity(i);
                 return true;
             }
-
             case R.id.action_logout: {
                 ReusableClass.saveInPreference("session", "", this);
                 finish();

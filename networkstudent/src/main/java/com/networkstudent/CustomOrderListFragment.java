@@ -23,7 +23,6 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -32,11 +31,8 @@ import butterknife.ButterKnife;
 public class CustomOrderListFragment extends Fragment {
 
     private static final String TAG = "MYTAG";
-    @Bind(R.id.my_recycler_view)
     RecyclerView myRecyclerView;
-    @Bind(R.id.progressBar)
     ProgressBar progressBar;
-    @Bind(R.id.textViewNoData)
     TextView textViewNoData;
     private RecyclerView.LayoutManager mLayoutManager;
     private OrderRecyclerAdapter mAdapter;
@@ -57,7 +53,9 @@ public class CustomOrderListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_custom_order_layout, container, false);
-        ButterKnife.bind(this, rootView);
+        myRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        textViewNoData = (TextView) rootView.findViewById(R.id.textViewNoData);
 
         populateList();
         myRecyclerView.setHasFixedSize(true);

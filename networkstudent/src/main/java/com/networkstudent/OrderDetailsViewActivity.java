@@ -121,15 +121,15 @@ public class OrderDetailsViewActivity extends BaseActivity {
 
 
     @Override
-    protected void onStart() {
-        EventBus.getDefault().registerSticky(this);
+    public void onStart() {
         super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onStop() {
+        super.onStop();
         EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
     public void onEvent(CloseProductDetailsScreenEvent event) {
