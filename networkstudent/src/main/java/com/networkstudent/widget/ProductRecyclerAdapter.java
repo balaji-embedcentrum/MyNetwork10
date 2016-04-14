@@ -79,6 +79,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                 customViewHolder.textViewProfileView.setText(String.valueOf(Integer.parseInt(customViewHolder.textViewProfileView.getText().toString()) + 1));
                 Intent intent = new Intent(context, ProductShowcaseActivity.class);
                 intent.putExtra("profileCode", profileDataArrayList.get(i).getProfileCode() + "");
+                intent.putExtra("userId", profileDataArrayList.get(i).getUserId() + "");
                 context.startActivity(intent);
             }
         });

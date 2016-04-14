@@ -5,6 +5,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,18 +19,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.networkstudent.model.Product;
+import com.networkstudent.utils.ReusableClass;
 import com.networkstudent.widget.ArchivedProductListRecyclerAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
@@ -58,11 +62,14 @@ public class ProductShowcaseActivity extends BaseActivity {
     FloatingActionButton fab;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.imageViewFav)
+    ImageView imageViewFav;
 
 
     private RecyclerView.LayoutManager mLayoutManager;
     private ArchivedProductListRecyclerAdapter mAdapter;
     private String profileCode;
+    private String userId;
     private ParseGeoPoint latLngTo;
     private Location latLngFrom;
 
@@ -87,6 +94,9 @@ public class ProductShowcaseActivity extends BaseActivity {
             }
         });
         profileCode = getIntent().getStringExtra("profileCode");
+        userId = getIntent().getStringExtra("userId");
+        selectFevIcon();
+
         mAdapter = new ArchivedProductListRecyclerAdapter(this);
         myRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(this, 2);
@@ -115,6 +125,25 @@ public class ProductShowcaseActivity extends BaseActivity {
                         latLngFrom = location;
                     }
                 });
+    }
+
+    private void selectFevIcon() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
+        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
+        query.whereEqualTo("userID", Integer.parseInt(userId));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> fevList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + fevList.size() + " scores");
+                    if (fevList.size() > 0)
+                        imageViewFav.setImageResource(R.drawable.fav_btn_active);
+                    else
+                        imageViewFav.setImageResource(R.drawable.fav_btn_inactive);
+                } else
+                    Log.d("score", "Error: " + e.getMessage());
+
+            }
+        });
     }
 
     public void openingNavigation(double latitude_currrent, double longitude_current, double latitude_destination, double longitude_destination) {
@@ -237,5 +266,66 @@ public class ProductShowcaseActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.imageViewFav)
+    public void addingToFav(final View v) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
+        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
+        query.whereEqualTo("userID", Integer.parseInt(userId));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> fevList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + fevList.size() + " scores");
+                    if (fevList.size() > 0) {
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
+                        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
+                        query.whereEqualTo("userID", Integer.parseInt(userId));
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> invites, ParseException e) {
+                                if (e == null) {
+                                    // iterate over all messages and delete them
+                                    for (ParseObject invite : invites) {
+                                        invite.deleteInBackground();
+                                    }
+                                    Toast.makeText(ProductShowcaseActivity.this, "Removed from favorites.", Toast.LENGTH_LONG).show();
+                                    imageViewFav.setImageResource(R.drawable.fav_btn_inactive);
+                                } else {
+                                    Toast.makeText(ProductShowcaseActivity.this, "Sorry unable to remove please try again.", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    } else {
+                        ParseObject gameScore = new ParseObject("UserFavorites");
+                        gameScore.put("userID", Integer.parseInt(userId));
+                        gameScore.put("profileCode", Integer.parseInt(profileCode));
+                        gameScore.put("StudentPhone", ReusableClass.getFromPreference("session", ProductShowcaseActivity.this));
+                        gameScore.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                Log.d("TAG", " UPDATED");
+                                if (e == null) {
+                                    imageViewFav.setImageResource(R.drawable.fav_btn_active);
+                                    Snackbar snackbar = Snackbar
+                                            .make(v, "Added to your Favorites.", Snackbar.LENGTH_LONG)
+                                            .setAction("UNDO", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    imageViewFav.performClick();
+                                                    imageViewFav.setImageResource(R.drawable.fav_btn_inactive);
+                                                }
+                                            });
+                                    snackbar.show();
+                                } else {
+                                    Toast.makeText(ProductShowcaseActivity.this, "Sorry unable to undo please try again.", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 }

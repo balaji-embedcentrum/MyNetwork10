@@ -65,10 +65,10 @@
         <activity
             android:name=".ProductShowcaseActivity"
             android:label="Product Showcase"
-            android:theme="@style/AppThemeToolBar"></activity>
+            android:theme="@style/AppThemeToolBar" />
         <activity
             android:name=".FullScreenImageActivity"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".FavoritesActivity"
             android:label="Favorites"
@@ -77,6 +77,15 @@
             android:name=".OrderedProductListActivity"
             android:label="Order Lists"
             android:theme="@style/AppThemeToolBar" />
+        <activity
+            android:name=".OrderDetailsViewActivity"
+            android:label="Order Details"
+            android:theme="@style/AppThemeToolBar" />
+        <activity
+            android:name=".ChangePinActivity"
+            android:label="Change Pin"
+            android:theme="@style/AppThemeToolBar"></activity>
+
         <activity
             android:name=".ProductDetailsViewActivity"
             android:label="Product Details"

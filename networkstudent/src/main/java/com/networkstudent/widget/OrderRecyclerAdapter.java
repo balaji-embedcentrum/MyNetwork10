@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.networkstudent.ProductDetailsViewActivity;
+import com.networkstudent.OrderDetailsViewActivity;
 import com.networkstudent.R;
 import com.networkstudent.model.OrderData;
 import com.networkstudent.model.Product;
@@ -95,7 +95,7 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
 
                                             productArrayList.add(product);
                                         }
-                                        Intent i = new Intent(context, ProductDetailsViewActivity.class);
+                                        Intent i = new Intent(context, OrderDetailsViewActivity.class);
                                         i.putExtra("productDetails", productArrayList.get(0).toString());
                                         i.putExtra("orderCode", singleOrder.getOrderCode());
                                         i.putExtra("orderStatus", singleOrder.getOrderStatus());

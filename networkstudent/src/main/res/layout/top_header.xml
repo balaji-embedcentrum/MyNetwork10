@@ -11,16 +11,36 @@
         android:layout_height="match_parent"
         android:background="@drawable/placeholder" />
 
-    <ImageView
-        android:id="@+id/ImageViewCall"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="10dp"
-        android:src="@drawable/call_btn_inactive" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="10dp"
+            android:text="Favorite"
+            tools:src="@drawable/fav_btn_active" />
+
+        <ImageView
+            android:id="@+id/ImageViewCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/call_btn_inactive" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

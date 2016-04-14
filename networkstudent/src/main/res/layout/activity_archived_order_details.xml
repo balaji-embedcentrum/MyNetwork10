@@ -42,62 +42,6 @@
                 android:background="@color/heading_bg"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="ORDER ID"
-                android:textColor="@color/heading_text_bg" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line_bg"
-                android:padding="10dp" />
-
-            <TextView
-                android:id="@+id/textViewOrderId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                tools:text="160303-4DF2" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line_bg" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/heading_bg"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="ORDER STATUS"
-                android:textColor="@color/heading_text_bg" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line_bg"
-                android:padding="10dp" />
-
-            <TextView
-                android:id="@+id/textViewOrderStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                tools:text="Picked Up" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line_bg" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/heading_bg"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
                 android:text="PRODUCT DETAILS"
                 android:textColor="@color/heading_text_bg" />
 
@@ -210,36 +154,6 @@
 
                     </LinearLayout>
                 </HorizontalScrollView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <Button
-                    android:id="@+id/buttonPickUp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight=".5"
-                    android:background="@color/green"
-                    android:onClick="pickingUp"
-                    android:text="Pick-up"
-                    android:textColor="@android:color/white" />
-
-                <Button
-                    android:id="@+id/buttonCancel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight=".5"
-                    android:background="@color/red"
-                    android:onClick="cancelling"
-                    android:text="Cancel"
-                    android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

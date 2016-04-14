@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.networkstudent.FullScreenImageActivity;
+import com.networkstudent.ProductDetailsViewActivity;
 import com.networkstudent.R;
 import com.networkstudent.model.Product;
 
@@ -88,10 +88,14 @@ public class ArchivedProductListRecyclerAdapter extends RecyclerView.Adapter<Arc
         customViewHolder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent i = new Intent(context, FullScreenImageActivity.class);
+//                i.putExtra("imageUrl", finalImageUrl);
+//                context.startActivity(i);
 
-                Intent i = new Intent(context, FullScreenImageActivity.class);
-                i.putExtra("imageUrl", finalImageUrl);
-                context.startActivity(i);
+                Intent intent = new Intent(context, ProductDetailsViewActivity.class);
+                intent.putExtra("productDetails", productArrayList.get(i).toString());
+                context.startActivity(intent);
+
             }
         });
     }

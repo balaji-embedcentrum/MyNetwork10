@@ -2,21 +2,25 @@ package com.networkstudent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.networkstudent.event.CloseProductDetailsScreenEvent;
 import com.networkstudent.model.Product;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
-public class ProductDetailsViewActivity extends BaseActivity {
+public class OrderDetailsViewActivity extends BaseActivity {
 
     private static final String TAG = "EditProductActivity";
 
@@ -24,13 +28,20 @@ public class ProductDetailsViewActivity extends BaseActivity {
     LinearLayout LinearLayoutImageList;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.textViewOrderId)
+    TextView textViewOrderId;
+    @Bind(R.id.textViewOrderStatus)
+    TextView textViewOrderStatus;
     @Bind(R.id.textViewProductDetails)
     TextView textViewProductDetails;
     @Bind(R.id.textViewProductDescriptions)
     TextView textViewProductDescriptions;
     @Bind(R.id.textViewProductCost)
     TextView textViewProductCost;
-
+    @Bind(R.id.buttonPickUp)
+    Button buttonPickUp;
+    @Bind(R.id.buttonCancel)
+    Button buttonCancel;
 
     private int addedImage = 1;
     private String orderCode;
@@ -38,7 +49,7 @@ public class ProductDetailsViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_archived_order_details);
+        setContentView(R.layout.activity_archived_product_details);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -51,9 +62,16 @@ public class ProductDetailsViewActivity extends BaseActivity {
         Product product = new Gson().fromJson(getIntent().getStringExtra("productDetails"), Product.class);
         orderCode = getIntent().getStringExtra("orderCode");
 
+        textViewOrderId.setText(orderCode);
+        textViewOrderStatus.setText(getIntent().getStringExtra("orderStatus"));
         textViewProductDetails.setText(product.getProductSummary());
         textViewProductDescriptions.setText(product.getProductDescription());
         textViewProductCost.setText("USD " + product.getProductCost());
+
+        if (!getIntent().getStringExtra("orderStatus").equalsIgnoreCase("Ordered")) {
+            buttonPickUp.setVisibility(View.GONE);
+            buttonCancel.setVisibility(View.GONE);
+        }
 
         if (product.getProductFoto1() != null)
             addImage(product.getProductFoto1(), 0);
@@ -75,9 +93,9 @@ public class ProductDetailsViewActivity extends BaseActivity {
             productImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(ProductDetailsViewActivity.this, FullScreenImageActivity.class);
+                    Intent i = new Intent(OrderDetailsViewActivity.this, FullScreenImageActivity.class);
                     i.putExtra("imageUrl", productFotoUrl);
-                    ProductDetailsViewActivity.this.startActivity(i);
+                    OrderDetailsViewActivity.this.startActivity(i);
                 }
             });
 
@@ -86,6 +104,38 @@ public class ProductDetailsViewActivity extends BaseActivity {
                     .placeholder(R.drawable.placeholder)
                     .crossFade()
                     .into(productImageView);
+        }
+    }
+
+    public void pickingUp(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        DialogFragmentConfirmPickup dialogFragment = new DialogFragmentConfirmPickup(orderCode);
+        dialogFragment.show(fm, "PickUp Fragment");
+    }
+
+    public void cancelling(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        DialogFragmentCancelConfirmation dialogFragment = new DialogFragmentCancelConfirmation(orderCode);
+        dialogFragment.show(fm, "Cancel Fragment");
+    }
+
+
+    @Override
+    protected void onStart() {
+        EventBus.getDefault().registerSticky(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    public void onEvent(CloseProductDetailsScreenEvent event) {
+        if (event.getCloseProductDetailsScreen()) {
+            finish();
+            EventBus.getDefault().removeStickyEvent(event);
         }
     }
 }
