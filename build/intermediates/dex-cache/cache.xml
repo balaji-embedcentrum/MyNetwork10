@@ -1,2 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.4.0_00f380b1862e4ed85fa003e840c1769f588b0e7a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.4_c386efb3ecb30627323577ece9a86d771459311e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_536e7a6566da509930b1ae2ac878577ac61573a3/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/butterknife-7.0.1_f24cd8e72e857c4272018698baeff927d8bd41ea/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-tasks-1.4.0_50d5b1bfd4879eea3c9b393a0ef4cc27f4ad9699/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_4ab500acc9a331020048fab3833d6218fc20c7e2/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.3.0_3e20c07a94b8551188bda8b0e8e7a99c1950f908/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c701ede3921d4a950fc35a57309c69d550475997">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_92415bffc1bd31d5988e86f972b2386447018344/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.4.0/ddd166d01b3158d1c00576d29f7ed15c030df719/eventbus-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/eventbus-2.4.0_91baef4dbe9143b4afe3636af7b57eb37f5b2bfa/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.3.0_854d46da8120c1e02dde6871bc3caa1efd9aad45/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_bf1ca87dd1403b103c58a6281e7d6ca926d49d5b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.7.3/f950c2bda38847d569fb99a5871b71b1bd859380/okhttp-2.7.3.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f950c2bda38847d569fb99a5871b71b1bd859380">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-2.7.3_06ac0902c6b9d4eb2e472870bc7b5c87be523c66/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/io.nlopez.smartlocation/library/3.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9f005bd05449fbd99a9f9baa8fa01631017bbaf8">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/io.nlopez.smartlocation-library-3.2.0_aba9dc30129a826d1f9460ac47a47442988e9392/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-8.4.0_cee350a5c1fabc70b2db78f2ef64c72cd19aefce/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="14193166f2846288549b5a8d3b40ab7cdb6c2b1e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_1279490b4b143f556e81c72274814693777eef21/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-urlconnection/2.7.3/a4dbcddbfebc9a32650e6141beb4dbc865fe9a24/okhttp-urlconnection-2.7.3.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a4dbcddbfebc9a32650e6141beb4dbc865fe9a24">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-urlconnection-2.7.3_072a36df23bf4f6bcb084420d0c3c255506b034a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/libs/Parse-1.11.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="54a0d027ea5d5b0dae92833991bb68f9b3da6ca6">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/2/Parse-1.11.0_f03c513986c3403e4a0790532cab08500744da08/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.8.0/a517f29ed06be2b2879524fcd94b6e9b36e2e0b5/retrofit-1.8.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-1.8.0_40fb22c626dfc060be91ff5f862129853821feaa/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_51c2f4a2d3523d72a5f3aec1762a761f7085a391/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_01ca60d47158836885f76b18162a1d9caae83a8e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/glide-3.7.0_e8d743e4fee59bfd6f5c4907694003677f1dc3b5/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.digits.sdk.android/digits/1.9.3/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="990cba7dbe7fc91e1082a9a8ea6d663c0741a0f1">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.digits.sdk.android-digits-1.9.3_9a06bc7865bd638675b773221f999ab164c03f03/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_0b02e7c235cc9aaed91668e3e084adeb7df8bca0/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/io.fabric.sdk.android/fabric/1.3.10/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a5db9a2dd46d84285ef737f65030b74b6e8ee2a4">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/io.fabric.sdk.android-fabric-1.3.10_153d0a80939685b0561f1b479f7b07dce8b65ccb/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_2b9e7974be8801723cd4eade3f03ddd15d3aa10b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-applinks-1.4.0_a57f4d1a43fc24cc399dae9337b9b6b29b4cd869/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_74604e200bfd1d26733630e008d481f292c9e885/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.twitter.sdk.android/twitter-core/1.6.4/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="61807f257226cc1e6e2774d1e7a876260a808038">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.twitter.sdk.android-twitter-core-1.6.4_43a06b0e63b63de1902865191f05c85bd389a70f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.4.0_0f77c114a0544adad21c9157d1d1af8356b0e020/classes.dex" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-8.4.0_7e5b56dc659749c8fdefe5f1e6603ee8af0c5677/classes.dex" />
+    </item>
+
+</items>
