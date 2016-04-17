@@ -1,2 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wearable-8.4.0_43181f87ef184dff5500b52cbda1018c57601ee6.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-safetynet-8.4.0_7b39f40b3b4ecac8c01106e0131e9adfb057c0c5.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appinvite-8.4.0_703ac508f4a1a54ec9aa4a9bb00ff496a1e89056.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-panorama-8.4.0_d39feea4223ea88024699d5032346cab0eeaa6bf.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wallet-8.4.0_0eb01721970a569c71ad657026e66727feec8922.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.4.0_b8e3bfe3c3e05083756ccc1a9bae798d5347760d.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-8.4.0_01d29872b1b47779ed1fb0c3d3bf2d1adbfd29b4.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.android.support-mediarouter-v7-23.0.0_c8e6f165904ca24f8700caf1dabd37454ecda44d.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.4.0_a732fb24383edd3210e33b6873cf3ae3a786789e.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="eed58c25a701585fa831f7f20601a7b8967c7f9d">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/instant-run-bootstrap_92415bffc1bd31d5988e86f972b2386447018344.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_3cac912bd58a61e712eca86f4b5679d9bb150862.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-8.4.0_481ba8d1ff3d1d96b62e10f9e934c6c2ab37c266.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_20d71614df1e0ef8b7ea688d13da67f0d7ece1e0.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/internal_impl-23.0.0_80f8dcfd775b4b02e2cc3e44d4038faf7946faa7.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-8.4.0_78d4bf838ab5499161801cc59915b6a8a490ff2a.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.4.0_ba3a2f3744b6b85b72def9e19ec1dbde3011dc69.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-8.4.0_16fc2062061efbd56e679a841ed19d922cc5cbca.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-fitness-8.4.0_c20cd2ba5224b14508e81ed6d78c395b29f63058.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-ads-8.4.0_282619747559b0f43b1425ef3d7f374905825692.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-cast-8.4.0_a7f368adac7f92bdd60ec4944f086759a0559cbf.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.4.0_6bc41b5f8e1c8c95174cbac21d3ba8c02135afd0.jar" />
+    </item>
+    <item
+        jar="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="/Users/AJ/Documents/Android Projects/Android/Pee@Poo/res/MyNetwork10/networkstudent/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.4.0_165150415ac14dbc9533cdb90e80feb08bf368e3.jar" />
+    </item>
+
+</items>
