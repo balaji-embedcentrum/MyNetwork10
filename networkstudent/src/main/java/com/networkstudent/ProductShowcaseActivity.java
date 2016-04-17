@@ -238,6 +238,7 @@ public class ProductShowcaseActivity extends BaseActivity {
                                     product.setProductSummary(p.getString("ProductSummary"));
                                     product.setProductStatus(p.getString("ProductStatus"));
                                     product.setProductCost(p.getInt("ProductCost"));
+                                    product.setProfileCode(p.getInt("ProductCode"));
                                     product.setObjectId(p.getObjectId());
                                     if (p.getParseFile("ProductFoto1") != null)
                                         product.setProductFoto1(p.getParseFile("ProductFoto1").getUrl().toString());

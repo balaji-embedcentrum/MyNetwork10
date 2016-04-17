@@ -7,7 +7,7 @@ import com.google.gson.Gson;
  */
 public class Product {
     private String ObjectId;
-    private String ProfileCode;
+    private int ProfileCode;
     private String ProductStatus;
     private String ProductDescription;
     private String ProductSummary;
@@ -56,11 +56,11 @@ public class Product {
         ObjectId = objectId;
     }
 
-    public String getProfileCode() {
+    public int getProfileCode() {
         return ProfileCode;
     }
 
-    public void setProfileCode(String profileCode) {
+    public void setProfileCode(int profileCode) {
         ProfileCode = profileCode;
     }
 

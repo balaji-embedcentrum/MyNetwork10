@@ -9,7 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.networkteacher.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
@@ -55,6 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
+        android:gravity="center"
         android:text="Sorry! Looks like not product available."
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
