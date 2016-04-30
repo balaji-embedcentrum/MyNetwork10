@@ -39,6 +39,7 @@ public class MyRecyclerFavoritesAdapter extends RecyclerView.Adapter<MyRecyclerF
     }
 
     public void addAll(ArrayList<ProfileData> profileDataList) {
+        profileDataArrayList.clear();
         profileDataArrayList.addAll(profileDataList);
         notifyDataSetChanged();
     }
@@ -79,6 +80,7 @@ public class MyRecyclerFavoritesAdapter extends RecyclerView.Adapter<MyRecyclerF
                 customViewHolder.textViewProfileView.setText(String.valueOf(Integer.parseInt(customViewHolder.textViewProfileView.getText().toString()) + 1));
                 Intent intent = new Intent(context, ProductShowcaseActivity.class);
                 intent.putExtra("profileCode", profileDataArrayList.get(i).getProfileCode() + "");
+                intent.putExtra("profileObjId", profileDataArrayList.get(i).getObjectId() + "");
                 intent.putExtra("userId", profileDataArrayList.get(i).getUserId() + "");
                 context.startActivity(intent);
             }

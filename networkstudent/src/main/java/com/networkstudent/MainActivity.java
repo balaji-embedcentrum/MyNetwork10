@@ -47,8 +47,7 @@ import butterknife.ButterKnife;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
-public class MainActivity extends BaseActivity implements OnMapReadyCallback {
-
+public class MainActivity extends BaseActivity implements PlaceSelectionListener, OnMapReadyCallback {
     @Bind(R.id.toolbar)
     Toolbar toolBar;
     @Bind(R.id.tabLayout)
@@ -61,14 +60,20 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     private CustomPagerAdapter customPagerAdapter;
     private int noOfCategory = 0;
     private int radiusKm = 0;
+    private PlaceAutocompleteFragment autocompleteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
+
+        // Retrieve the PlaceAutocompleteFragment.
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment.setOnPlaceSelectedListener(this);
+        autocompleteFragment.setHint("");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -86,7 +91,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                                     radiusKm = p.getNumber("radius").intValue();
                                     Log.d("TAG", "radiusKm: " + p.getNumber("radius"));
                                 }
-                                listenForAddressSearch();
+                                //listenForAddressSearch();
                                 prepareCategoryTabs();
                             }
                         } else {
@@ -119,42 +124,34 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         });
     }
 
-    private void listenForAddressSearch() {
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        autocompleteFragment.setHint("");
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                Log.i("TAG", "Place: " + place.getLatLng());
+    @Override
+    public void onPlaceSelected(Place place) {
+        Log.i("TAG", "Place: " + place.getLatLng());
 
-                Log.d("TAG", "lat: " + place.getLatLng().latitude + "\n lng: " + place.getLatLng().longitude);
-                final double latitude = place.getLatLng().latitude;
-                final double longitude = place.getLatLng().longitude;
-                final LatLng latLng = new LatLng(latitude, longitude);
-                mMap.clear();
+        Log.d("TAG", "lat: " + place.getLatLng().latitude + "\n lng: " + place.getLatLng().longitude);
+        final double latitude = place.getLatLng().latitude;
+        final double longitude = place.getLatLng().longitude;
+        final LatLng latLng = new LatLng(latitude, longitude);
+        mMap.clear();
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12));
-                new Thread() {
-                    public void run() {
-                        try {
-                            getCircleOptions(latLng);
-                            getNearByLocation(latitude, longitude);
-                        } catch (Exception e) {
-                            Log.d("TAG", "Exception: " + e);
-                        }
-                    }
-                }.start();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12));
+        new Thread() {
+            public void run() {
+                try {
+                    autocompleteFragment.setText("");
+                    getCircleOptions(latLng);
+                    getNearByLocation(latitude, longitude);
+                } catch (Exception e) {
+                    Log.d("TAG", "Exception: " + e);
+                }
             }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i("TAG", "An error occurred: " + status);
-            }
-        });
+        }.start();
     }
 
+    @Override
+    public void onError(Status status) {
+        Log.i("TAG", "An error occurred: " + status);
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -396,49 +393,4 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
             }
         }
     }
-
-//    @Override
-//    protected void onStart() {
-//        if (!EventBus.getDefault().isRegistered(this))
-//            EventBus.getDefault().register(this);
-//        super.onStart();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        EventBus.getDefault().unregister(this);
-//        super.onDestroy();
-//    }
-//
-//    public void onEvent(GetSelectedLocationEvent event) {
-//        if (event.getLocationData().size() > 0) {
-//            if (mMap != null) {
-//                final LatLngBounds.Builder builder = new LatLngBounds.Builder();
-//
-//                for (int i = 0; i < event.getLocationData().size(); i++) {
-//                    final ProfileData profileData = event.getLocationData().get(i);
-//                    if (profileData.getProfileGeopoint() != null) {
-//                        final LatLng latLng = new LatLng(profileData.getProfileGeopoint().getLatitude(),
-//                                profileData.getProfileGeopoint().getLongitude());
-//
-//                        MainActivity.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                mMap.addMarker(new MarkerOptions().position(latLng).title(profileData.getProfileAddr1()
-//                                        + ", " + profileData.getProfileAddr2() + ", " + profileData.getProfileCity()
-//                                        + ", " + profileData.getProfileCountry()));
-//                            }
-//                        });
-//                        builder.include(latLng);
-//                    }
-//                }
-//                final LatLngBounds bounds = builder.build();
-//                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-//                    @Override
-//                    public void onMapLoaded() {
-//                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-//                    }
-//                });
-//            }
-//        }
-//    }
 }

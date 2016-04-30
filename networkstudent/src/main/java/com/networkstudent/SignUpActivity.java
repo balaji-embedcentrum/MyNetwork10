@@ -108,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                         startActivity(i);
                         finish();
                     } else {
-                        Toast.makeText(SignUpActivity.this, "Sorry error occured. Try again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this, "Sorry error occurred. Try again.", Toast.LENGTH_LONG).show();
                     }
                     dialog.dismiss();
                 }

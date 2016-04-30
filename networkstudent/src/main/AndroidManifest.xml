@@ -24,6 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,47 +60,50 @@
 
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Login" />
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleInstance"
-            android:theme="@style/FullscreenTheme" />
-        <activity
             android:name=".SignUpActivity"
-            android:label="Registration" />
+            android:label="Registration"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProductShowcaseActivity"
             android:label="Product Showcase"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeToolBar" />
         <activity
             android:name=".FullScreenImageActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".FavoritesActivity"
             android:label="Favorites"
-            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeToolBar" />
         <activity
             android:name=".OrderedProductListActivity"
             android:label="Order Lists"
-            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeToolBar" />
         <activity
             android:name=".OrderDetailsViewActivity"
             android:label="Order Details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeToolBar" />
         <activity
             android:name=".ChangePinActivity"
             android:label="Change Pin"
-            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeToolBar" />
         <activity
             android:name=".ProductDetailsViewActivity"
             android:label="Product Details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeToolBar" />
         <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

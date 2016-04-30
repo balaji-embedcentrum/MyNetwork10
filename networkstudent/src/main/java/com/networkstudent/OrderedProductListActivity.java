@@ -71,12 +71,6 @@ public class OrderedProductListActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     protected void onStart() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().registerSticky(this);

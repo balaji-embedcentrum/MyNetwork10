@@ -13,39 +13,6 @@ import com.networkstudent.utils.ReusableClass;
 public class BaseActivity extends AppCompatActivity {
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        String[] a = new String[]{"pear", "amleth", "dormitory", "tinsel", "dirty room", "hamlet", "listen", "silent"};
-
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a.length; j++) {
-                if (i != j) {
-                    String value = a[i];
-                    if (check(a[i].replaceAll("[^\\p{Alnum}]", "").toLowerCase(), a[j].replaceAll("[^\\p{Alnum}]", "").toLowerCase())) {
-                        value = value + ", " + a[j];
-                    }
-                    if (!value.equalsIgnoreCase(a[i]))
-                        System.out.println(value);
-                }
-            }
-        }
-
-    }
-
-    public boolean check(String first, String second) {
-        if (first.length() != second.length())
-            return false;
-
-        int value = 0;
-        for (int i = 0; i < first.length(); i++) {
-            value += ((int) first.charAt(i)) ^ 2;
-            value -= ((int) second.charAt(i)) ^ 2;
-        }
-        return value == 0;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.app_menu, menu);
@@ -58,26 +25,34 @@ public class BaseActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_home: {
                 Intent i = new Intent(this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;
             }
             case R.id.action_favorite: {
                 Intent i = new Intent(this, FavoritesActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;
             }
             case R.id.action_logout: {
                 ReusableClass.saveInPreference("session", "", this);
+                Intent i = new Intent(this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 finish();
+                startActivity(i);
+
                 return true;
             }
             case R.id.action_change_pin: {
                 Intent i = new Intent(this, ChangePinActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;
             }
             case R.id.action_my_order: {
                 Intent i = new Intent(this, OrderedProductListActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;
             }

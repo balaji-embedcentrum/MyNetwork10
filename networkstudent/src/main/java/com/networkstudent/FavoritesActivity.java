@@ -54,7 +54,11 @@ public class FavoritesActivity extends BaseActivity {
         mLayoutManager = new LinearLayoutManager(this);
         myRecyclerView.setLayoutManager(mLayoutManager);
         myRecyclerView.setAdapter(mAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         gettingProfileList();
     }
 

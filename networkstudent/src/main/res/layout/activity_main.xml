@@ -20,10 +20,9 @@
             <fragment
                 android:id="@+id/place_autocomplete_fragment"
                 android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                android:layout_width="wrap_content"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:layout_gravity="right" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -40,19 +39,19 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".50"
+            android:layout_weight=".55"
             tools:context=".MainActivity" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".50"
+            android:layout_weight=".45"
             android:orientation="vertical">
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:background="@color/colorPrimary"
                 app:tabSelectedTextColor="@android:color/black"
                 app:tabTextColor="@android:color/white" />

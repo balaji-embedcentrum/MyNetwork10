@@ -2,6 +2,7 @@ package com.networkstudent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +44,8 @@ public class OrderDetailsViewActivity extends BaseActivity {
     Button buttonPickUp;
     @Bind(R.id.buttonCancel)
     Button buttonCancel;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
 
     private int addedImage = 1;
     private String orderCode;
@@ -79,6 +83,15 @@ public class OrderDetailsViewActivity extends BaseActivity {
             addImage(product.getProductFoto2(), 1);
         if (product.getProductFoto3() != null)
             addImage(product.getProductFoto3(), 2);
+
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, scrollView.getBottom());
+            }
+        }, 200);
     }
 
     private void addImage(final String productFotoUrl, final int position) {

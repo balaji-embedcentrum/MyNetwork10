@@ -22,12 +22,13 @@ import com.networkstudent.model.Product;
 import com.networkstudent.utils.ReusableClass;
 import com.networkstudent.widget.ArchivedProductListRecyclerAdapter;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,14 +65,17 @@ public class ProductShowcaseActivity extends BaseActivity {
     Toolbar toolbar;
     @Bind(R.id.imageViewFav)
     ImageView imageViewFav;
+    @Bind(R.id.textViewDistance)
+    TextView textViewDistance;
 
 
     private RecyclerView.LayoutManager mLayoutManager;
     private ArchivedProductListRecyclerAdapter mAdapter;
     private String profileCode;
     private String userId;
-    private ParseGeoPoint latLngTo;
+    private Location latLngTo;
     private Location latLngFrom;
+    private String profileObjId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,14 @@ public class ProductShowcaseActivity extends BaseActivity {
             }
         });
 
+        profileCode = getIntent().getStringExtra("profileCode");
+        userId = getIntent().getStringExtra("userId");
+        profileObjId = getIntent().getStringExtra("profileObjId");
+
+        ReusableClass.saveInPreference("profileCode", profileCode, this);
+        ReusableClass.saveInPreference("userID", userId, this);
+        ReusableClass.saveInPreference("profileObjId", profileObjId, this);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,44 +105,51 @@ public class ProductShowcaseActivity extends BaseActivity {
                     openingNavigation(latLngFrom.getLatitude(), latLngFrom.getLongitude(), latLngTo.getLatitude(), latLngTo.getLongitude());
             }
         });
-        profileCode = getIntent().getStringExtra("profileCode");
-        userId = getIntent().getStringExtra("userId");
-        selectFevIcon();
 
         mAdapter = new ArchivedProductListRecyclerAdapter(this);
         myRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(this, 2);
         myRecyclerView.setLayoutManager(mLayoutManager);
         myRecyclerView.setAdapter(mAdapter);
+    }
 
-        ImageViewCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ImageViewCall.getTag() != null) {
-                    Intent dial = new Intent();
-                    dial.setAction("android.intent.action.DIAL");
-                    dial.setData(Uri.parse("tel:" + ImageViewCall.getTag()));
-                    startActivity(dial);
-                } else
-                    Toast.makeText(ProductShowcaseActivity.this, "No no available.", Toast.LENGTH_LONG).show();
+    private void updateProfileView() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
+        query.getInBackground(ReusableClass.getFromPreference("profileObjId", this), new GetCallback<ParseObject>() {
+            public void done(ParseObject profileViews, ParseException e) {
+                if (e == null) {
+                    profileViews.increment("profileViews");
+                    latLngTo = new Location("newlocation");
+                    latLngTo.setLatitude(profileViews.getParseGeoPoint("profileGeopoint").getLatitude());
+                    latLngTo.setLongitude(profileViews.getParseGeoPoint("profileGeopoint").getLongitude());
+
+                    if (latLngFrom != null) {
+                        textViewDistance.setText(new DecimalFormat("##.##").format((latLngFrom.distanceTo(latLngTo) / 1000)) + " KM");
+                        textViewDistance.setVisibility(View.VISIBLE);
+                    } else {
+                        textViewDistance.setVisibility(View.GONE);
+                    }
+
+                    profileViews.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Log.d("TAG", " UPDATED");
+                            if (e == null) {
+                                addingHeaderData();
+                            } else {
+
+                            }
+                        }
+                    });
+                }
             }
         });
-        addingHeaderData();
-
-        SmartLocation.with(this).location()
-                .oneFix()
-                .start(new OnLocationUpdatedListener() {
-                    @Override
-                    public void onLocationUpdated(Location location) {
-                        latLngFrom = location;
-                    }
-                });
     }
 
     private void selectFevIcon() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
-        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
-        query.whereEqualTo("userID", Integer.parseInt(userId));
+        query.whereEqualTo("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", ProductShowcaseActivity.this)));
+        query.whereEqualTo("userID", Integer.parseInt(ReusableClass.getFromPreference("userID", ProductShowcaseActivity.this)));
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> fevList, ParseException e) {
                 if (e == null) {
@@ -154,7 +173,8 @@ public class ProductShowcaseActivity extends BaseActivity {
 
     private void addingHeaderData() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ProfileData");
-        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
+        query.whereEqualTo("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", ProductShowcaseActivity.this)));
+
         query.findInBackground(
                 new FindCallback<ParseObject>() {
                     @Override
@@ -178,7 +198,10 @@ public class ProductShowcaseActivity extends BaseActivity {
                                     if (p.getString("profileCountry") != null)
                                         address = address + ", " + p.getString("profileCountry");
 
-                                    latLngTo = p.getParseGeoPoint("profileGeopoint");
+                                    latLngTo = new Location("newlocation");
+                                    latLngTo.setLatitude(p.getParseGeoPoint("profileGeopoint").getLatitude());
+                                    latLngTo.setLongitude(p.getParseGeoPoint("profileGeopoint").getLongitude());
+
                                     textViewAddress.setText(address);
                                     ImageViewCall.setTag(p.getString("profilePhone"));
 
@@ -213,13 +236,43 @@ public class ProductShowcaseActivity extends BaseActivity {
         textViewNoData.setVisibility(View.INVISIBLE);
         progressContainer.setVisibility(View.VISIBLE);
         loadData();
+        selectFevIcon();
     }
 
     private void loadData() {
+        ImageViewCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ImageViewCall.getTag() != null) {
+                    Intent dial = new Intent();
+                    dial.setAction("android.intent.action.DIAL");
+                    dial.setData(Uri.parse("tel:" + ImageViewCall.getTag()));
+                    startActivity(dial);
+                } else
+                    Toast.makeText(ProductShowcaseActivity.this, "No no available.", Toast.LENGTH_LONG).show();
+            }
+        });
+        updateProfileView();
+        SmartLocation.with(this).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        latLngFrom = location;
+                        if (latLngTo != null) {
+                            textViewDistance.setText(new DecimalFormat("##.##").format((latLngFrom.distanceTo(latLngTo) / 1000)) + " KM");
+                            textViewDistance.setVisibility(View.VISIBLE);
+                        } else {
+                            textViewDistance.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+
         final ArrayList<Product> productArrayList = new ArrayList<>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ProductData");
-        query.whereEqualTo("ProfileCode", Integer.parseInt(profileCode));
+        query.whereEqualTo("ProfileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", ProductShowcaseActivity.this)));
         query.whereEqualTo("ProductStatus", "Active");
         query.findInBackground(
                 new FindCallback<ParseObject>() {
@@ -272,16 +325,17 @@ public class ProductShowcaseActivity extends BaseActivity {
     @OnClick(R.id.imageViewFav)
     public void addingToFav(final View v) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
-        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
-        query.whereEqualTo("userID", Integer.parseInt(userId));
+        query.whereEqualTo("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", ProductShowcaseActivity.this)));
+        query.whereEqualTo("userID", Integer.parseInt(ReusableClass.getFromPreference("userID", ProductShowcaseActivity.this)));
+
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> fevList, ParseException e) {
                 if (e == null) {
                     Log.d("score", "Retrieved " + fevList.size() + " scores");
                     if (fevList.size() > 0) {
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserFavorites");
-                        query.whereEqualTo("profileCode", Integer.parseInt(profileCode));
-                        query.whereEqualTo("userID", Integer.parseInt(userId));
+                        query.whereEqualTo("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", ProductShowcaseActivity.this)));
+                        query.whereEqualTo("userID", Integer.parseInt(ReusableClass.getFromPreference("userID", ProductShowcaseActivity.this)));
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> invites, ParseException e) {
                                 if (e == null) {
@@ -298,8 +352,8 @@ public class ProductShowcaseActivity extends BaseActivity {
                         });
                     } else {
                         ParseObject gameScore = new ParseObject("UserFavorites");
-                        gameScore.put("userID", Integer.parseInt(userId));
-                        gameScore.put("profileCode", Integer.parseInt(profileCode));
+                        gameScore.put("userID", Integer.parseInt(ReusableClass.getFromPreference("userID", ProductShowcaseActivity.this)));
+                        gameScore.put("profileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", ProductShowcaseActivity.this)));
                         gameScore.put("StudentPhone", ReusableClass.getFromPreference("session", ProductShowcaseActivity.this));
                         gameScore.saveInBackground(new SaveCallback() {
                             @Override

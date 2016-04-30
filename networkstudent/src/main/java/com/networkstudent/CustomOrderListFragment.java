@@ -73,6 +73,7 @@ public class CustomOrderListFragment extends Fragment {
         ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery("OrderData");
         queryOrder.whereEqualTo("OrderStatus", orderStatus);
         queryOrder.whereEqualTo("StudentPhone", (ReusableClass.getFromPreference("session", getContext())));
+        queryOrder.addDescendingOrder("updatedAt");
         queryOrder.findInBackground(
                 new FindCallback<ParseObject>() {
                     @Override
