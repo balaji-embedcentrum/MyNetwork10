@@ -96,6 +96,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
                                             productArrayList.add(product);
                                         }
                                         Intent i = new Intent(context, ProductDetailsViewActivity.class);
+                                        i.putExtra("orderCode", singleOrder.getOrderCode());
+                                        i.putExtra("orderStatus", singleOrder.getOrderStatus());
                                         i.putExtra("productDetails", productArrayList.get(0).toString());
                                         context.startActivity(i);
                                     }

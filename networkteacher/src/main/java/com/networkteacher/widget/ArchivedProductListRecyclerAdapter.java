@@ -89,6 +89,7 @@ public class ArchivedProductListRecyclerAdapter extends RecyclerView.Adapter<Arc
             public void onClick(View v) {
                 Intent i = new Intent(context, EditProductActivity.class);
                 i.putExtra("productDetails", product.toString());
+                i.putExtra("comingFrom", "archivedProduct");
                 context.startActivity(i);
             }
         });

@@ -6,4 +6,7 @@
     <color name="black_overlay">#BA000000</color>
     <color name="subtext_bg">#989898</color>
     <color name="dark_green">#00DC7C</color>
+    <color name="line_bg">#DCDCDC</color>
+    <color name="heading_bg">#E6E6E6</color>
+    <color name="heading_text_bg">#B9B9B9</color>
 </resources>

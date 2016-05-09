@@ -10,10 +10,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -69,6 +71,10 @@ public class EditProductActivity extends BaseActivity implements
     HashMap<Integer, byte[]> imageData = new HashMap<>(3);
     HashMap<Integer, String> imageUrl = new HashMap<>(3);
     ProgressDialog dialog;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.allImages)
+    HorizontalScrollView allImages;
     private int addedImage = 1;
     private ImageChooserManager imageChooserManager;
     private String filePath;
@@ -86,6 +92,14 @@ public class EditProductActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         Product product = new Gson().fromJson(getIntent().getStringExtra("productDetails"), Product.class);
 
@@ -252,7 +266,9 @@ public class EditProductActivity extends BaseActivity implements
                         @Override
                         public void done(List<ParseObject> profileList, ParseException e) {
                             if (e == null) {
-                                if (profileList.size() == 3 && activeSwitch.isChecked()) {
+                                if (getIntent().getStringExtra("comingFrom").equalsIgnoreCase("archivedProduct") &&
+                                        profileList.size() == 3 &&
+                                        activeSwitch.isChecked()) {
                                     Toast.makeText(EditProductActivity.this, "Already 3 activate product displaying.", Toast.LENGTH_LONG).show();
                                 } else {
                                     dialog = ProgressDialog.show(EditProductActivity.this, "Loading", "Please wait...", true);

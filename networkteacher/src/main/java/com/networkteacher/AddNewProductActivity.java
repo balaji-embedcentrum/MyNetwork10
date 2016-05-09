@@ -13,6 +13,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,6 +74,8 @@ public class AddNewProductActivity extends BaseActivity implements
     ArrayList<String> imagePath = new ArrayList<String>();
     ArrayList<byte[]> imageData = new ArrayList<>();
     ProgressDialog dialog;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private String mCurrentPhotoPath;
     private int addedImage = 1;
     private ImageChooserManager imageChooserManager;
@@ -89,6 +92,14 @@ public class AddNewProductActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void addImage(final String productFotoUrl, final int position) {

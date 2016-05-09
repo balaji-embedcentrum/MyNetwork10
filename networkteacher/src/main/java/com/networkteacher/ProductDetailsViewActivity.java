@@ -4,13 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -24,44 +24,55 @@ import butterknife.ButterKnife;
 
 public class ProductDetailsViewActivity extends BaseActivity {
 
-    private static final String TAG = "EditProductActivity";
-    @Bind(R.id.ActiveSwitch)
-    SwitchCompat activeSwitch;
-    @Bind(R.id.TextViewSummery)
-    AppCompatEditText textViewSummery;
-    @Bind(R.id.SummeryWrapper)
-    TextInputLayout SummeryWrapper;
-    @Bind(R.id.textViewDescription)
-    AppCompatEditText textViewDescription;
-    @Bind(R.id.DescriptionWrapper)
-    TextInputLayout DescriptionWrapper;
-    @Bind(R.id.textViewCost)
-    AppCompatEditText textViewCost;
-    @Bind(R.id.CostWrapper)
-    TextInputLayout CostWrapper;
-    @Bind(R.id.LinearLayoutImageList)
-    LinearLayout LinearLayoutImageList;
+    private static final String TAG = "ProductDetailsViewActivity";
 
     AlbumStorageDirFactory mAlbumStorageDirFactory = null;
     ArrayList<String> imagePath = new ArrayList<String>();
     ArrayList<byte[]> imageData = new ArrayList<>();
     ProgressDialog dialog;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.textViewOrderId)
+    TextView textViewOrderId;
+    @Bind(R.id.textViewOrderStatus)
+    TextView textViewOrderStatus;
+    @Bind(R.id.textViewProductDetails)
+    TextView textViewProductDetails;
+    @Bind(R.id.textViewProductDescriptions)
+    TextView textViewProductDescriptions;
+    @Bind(R.id.textViewProductCost)
+    TextView textViewProductCost;
+    @Bind(R.id.LinearLayoutImageList)
+    LinearLayout LinearLayoutImageList;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
     private String mCurrentPhotoPath;
     private int addedImage = 1;
     private String objectId;
+    private String orderCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archived_product_details);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         Product product = new Gson().fromJson(getIntent().getStringExtra("productDetails"), Product.class);
+        orderCode = getIntent().getStringExtra("orderCode");
 
-        textViewSummery.setText(product.getProductSummary());
-        textViewDescription.setText(product.getProductDescription());
-        textViewCost.setText("" + product.getProductCost());
-        activeSwitch.setChecked(false);
+        textViewOrderId.setText(orderCode);
+        textViewOrderStatus.setText(getIntent().getStringExtra("orderStatus"));
+        textViewProductDetails.setText(product.getProductSummary());
+        textViewProductDescriptions.setText(product.getProductDescription());
+        textViewProductCost.setText("USD " + product.getProductCost());
+        //ActiveSwitch.setChecked(false);
         objectId = product.getObjectId();
 
         if (product.getProductFoto1() != null)
