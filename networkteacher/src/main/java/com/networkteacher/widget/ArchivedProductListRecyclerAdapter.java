@@ -61,7 +61,7 @@ public class ArchivedProductListRecyclerAdapter extends RecyclerView.Adapter<Arc
         //Setting text view name and address
         customViewHolder.textViewSummery.setText(product.getProductSummary());
         customViewHolder.textViewDescription.setText(product.getProductDescription());
-        customViewHolder.textViewCost.setText("$ " + String.valueOf(product.getProductCost()));
+        customViewHolder.textViewCost.setText("$ " + String.valueOf(String.format("%1.2f", (product.getProductCost() - product.getProductDiscount()))));
 
         String imageUrl = "";
         if (product.getProductFoto3() != null)
@@ -77,7 +77,7 @@ public class ArchivedProductListRecyclerAdapter extends RecyclerView.Adapter<Arc
                     .placeholder(R.drawable.placeholder)
                     .crossFade()
                     .into(customViewHolder.imageViewBackGround);
-        else{
+        else {
             // make sure Glide doesn't load anything into this view until told otherwise
             Glide.clear(customViewHolder.imageViewBackGround);
             // remove the placeholder (optional); read comments below

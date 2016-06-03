@@ -11,10 +11,19 @@ public class Product {
     private String ProductStatus;
     private String ProductDescription;
     private String ProductSummary;
-    private int ProductCost;
+    private float ProductCost;
+    private float ProductDiscount;
     private String ProductFoto1;
     private String ProductFoto2;
     private String ProductFoto3;
+
+    public float getProductDiscount() {
+        return ProductDiscount;
+    }
+
+    public void setProductDiscount(float productDiscount) {
+        ProductDiscount = productDiscount;
+    }
 
     public String getProductFoto1() {
         return ProductFoto1;
@@ -40,11 +49,11 @@ public class Product {
         ProductFoto3 = productFoto3;
     }
 
-    public int getProductCost() {
+    public float getProductCost() {
         return ProductCost;
     }
 
-    public void setProductCost(int productCost) {
+    public void setProductCost(float productCost) {
         ProductCost = productCost;
     }
 

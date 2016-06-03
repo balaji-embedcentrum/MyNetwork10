@@ -6,17 +6,17 @@
         android:title="My Product"
         app:showAsAction="withText|never" />
     <!--<item-->
-        <!--android:id="@+id/action_product_archives"-->
-        <!--android:title="Product Archives"-->
-        <!--app:showAsAction="withText|never" />-->
+    <!--android:id="@+id/action_product_archives"-->
+    <!--android:title="Product Archives"-->
+    <!--app:showAsAction="withText|never" />-->
     <item
         android:id="@+id/action_my_order"
         android:title="My Order"
         app:showAsAction="withText|never" />
-    <!--<item-->
-    <!--android:id="@+id/action_my_membership"-->
-    <!--android:title="My Membership 1"-->
-    <!--app:showAsAction="withText|never" />-->
+    <item
+        android:id="@+id/action_my_membership"
+        android:title="My Membership"
+        app:showAsAction="withText|never" />
     <!--<item-->
     <!--android:id="@+id/action_change_pin"-->
     <!--android:title="Change Pin"-->

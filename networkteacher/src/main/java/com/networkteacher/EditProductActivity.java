@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.kbeanie.imagechooser.api.ChosenImages;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.networkteacher.models.Product;
+import com.networkteacher.utils.DecimalDigitsInputFilter;
 import com.networkteacher.utils.ReusableClass;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -47,8 +49,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EditProductActivity extends BaseActivity implements
-        ImageChooserListener {
+public class EditProductActivity extends BaseActivity implements ImageChooserListener {
 
     private static final String TAG = "EditProductActivity";
     @Bind(R.id.ActiveSwitch)
@@ -75,6 +76,10 @@ public class EditProductActivity extends BaseActivity implements
     Toolbar toolbar;
     @Bind(R.id.allImages)
     HorizontalScrollView allImages;
+    @Bind(R.id.textViewDiscount)
+    AppCompatEditText textViewDiscount;
+    @Bind(R.id.DiscountWrapper)
+    TextInputLayout DiscountWrapper;
     private int addedImage = 1;
     private ImageChooserManager imageChooserManager;
     private String filePath;
@@ -100,12 +105,15 @@ public class EditProductActivity extends BaseActivity implements
                 onBackPressed();
             }
         });
+        textViewCost.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+        textViewDiscount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
 
         Product product = new Gson().fromJson(getIntent().getStringExtra("productDetails"), Product.class);
 
         textViewSummery.setText(product.getProductSummary());
         textViewDescription.setText(product.getProductDescription());
         textViewCost.setText("" + product.getProductCost());
+        textViewDiscount.setText("" + product.getProductDiscount());
         if (product.getProductStatus().equalsIgnoreCase("Active"))
             activeSwitch.setChecked(true);
         else
@@ -257,7 +265,8 @@ public class EditProductActivity extends BaseActivity implements
         final String summery = textViewSummery.getText().toString().trim();
         final String description = textViewDescription.getText().toString().trim();
         final String cost = textViewCost.getText().toString().trim();
-        if (validated(summery, description, cost)) {
+        final String discount = textViewDiscount.getText().toString().trim();
+        if (validated(summery, description, cost, discount)) {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("ProductData");
             query.whereEqualTo("ProfileCode", Integer.parseInt(ReusableClass.getFromPreference("profileCode", EditProductActivity.this)));
             query.whereEqualTo("ProductStatus", "Active");
@@ -300,7 +309,8 @@ public class EditProductActivity extends BaseActivity implements
 
                                                         john.put("ProductSummary", summery);
                                                         john.put("ProductDescription", description);
-                                                        john.put("ProductCost", Integer.parseInt(cost));
+                                                        john.put("ProductCost", Float.parseFloat(cost));
+                                                        john.put("ProductDiscount", Float.parseFloat(discount));
                                                         if (activeSwitch.isChecked())
                                                             john.put("ProductStatus", "Active");
                                                         else
@@ -334,22 +344,31 @@ public class EditProductActivity extends BaseActivity implements
         }
     }
 
-    private boolean validated(String summery, String description, String cost) {
+    private boolean validated(String summery, String description, String cost, String discount) {
         if (TextUtils.isEmpty(summery)) {
             SummeryWrapper.setError("Summery name cannot be empty");
             textViewSummery.requestFocus();
             return false;
-        }
+        } else
+            SummeryWrapper.setError(null);
         if (TextUtils.isEmpty(description)) {
             DescriptionWrapper.setError("Description cannot be empty");
             textViewDescription.requestFocus();
             return false;
-        }
+        } else
+            DescriptionWrapper.setError(null);
         if (TextUtils.isEmpty(cost)) {
             CostWrapper.setError("Cost cannot be empty");
             textViewCost.requestFocus();
             return false;
-        }
+        } else
+            CostWrapper.setError(null);
+        if (TextUtils.isEmpty(discount)) {
+            DiscountWrapper.setError("If no discount put 0");
+            textViewDiscount.requestFocus();
+            return false;
+        } else
+            DiscountWrapper.setError(null);
         return true;
     }
 

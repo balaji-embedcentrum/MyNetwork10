@@ -172,7 +172,9 @@ public class ArchivedProductsFragment extends Fragment {
                                     product.setProductStatus(p.getString("ProductStatus"));
                                     product.setProductSummary(p.getString("ProductSummary"));
                                     product.setProductStatus(p.getString("ProductStatus"));
-                                    product.setProductCost(p.getInt("ProductCost"));
+                                    product.setProductCost(p.getNumber("ProductCost").floatValue());
+                                    product.setProductDiscount(p.getNumber("ProductDiscount").floatValue());
+
                                     product.setObjectId(p.getObjectId());
                                     if (p.getParseFile("ProductFoto1") != null)
                                         product.setProductFoto1(p.getParseFile("ProductFoto1").getUrl().toString());

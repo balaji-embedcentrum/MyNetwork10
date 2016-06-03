@@ -290,8 +290,9 @@ public class ProductShowcaseActivity extends BaseActivity {
                                     product.setProductStatus(p.getString("ProductStatus"));
                                     product.setProductSummary(p.getString("ProductSummary"));
                                     product.setProductStatus(p.getString("ProductStatus"));
-                                    product.setProductCost(p.getInt("ProductCost"));
-                                    product.setProfileCode(p.getInt("ProductCode"));
+                                    product.setProductCost(p.getNumber("ProductCost").floatValue());
+                                    product.setProductDiscount(p.getNumber("ProductDiscount").floatValue());
+                                    product.setProfileCode(p.getNumber("ProfileCode").intValue());
                                     product.setObjectId(p.getObjectId());
                                     if (p.getParseFile("ProductFoto1") != null)
                                         product.setProductFoto1(p.getParseFile("ProductFoto1").getUrl().toString());

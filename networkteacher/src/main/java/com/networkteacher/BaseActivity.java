@@ -33,14 +33,18 @@ public class BaseActivity extends AppCompatActivity {
 
             case R.id.action_logout: {
                 ReusableClass.saveInPreference("session", "", this);
+                Intent i = new Intent(this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 finish();
+                startActivity(i);
                 return true;
             }
-//            case R.id.action_product_archives: {
-//                Intent i = new Intent(this, ArchivedProductListActivity.class);
-//                startActivity(i);
-//                return true;
-//            }
+            case R.id.action_my_membership: {
+                Intent i = new Intent(this, MyMembershipActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                return true;
+            }
             case R.id.action_my_order: {
                 Intent i = new Intent(this, OrderedProductListActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

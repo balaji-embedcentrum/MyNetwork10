@@ -3,7 +3,9 @@ package com.networkstudent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -42,6 +44,8 @@ public class ProductDetailsViewActivity extends BaseActivity {
     TextView textViewProductDescriptions;
     @Bind(R.id.textViewProductCost)
     TextView textViewProductCost;
+    @Bind(R.id.textViewProductAfterDiscountCost)
+    TextView textViewProductAfterDiscountCost;
 
 
     private int addedImage = 1;
@@ -66,7 +70,13 @@ public class ProductDetailsViewActivity extends BaseActivity {
 
         textViewProductDetails.setText(product.getProductSummary());
         textViewProductDescriptions.setText(product.getProductDescription());
-        textViewProductCost.setText("USD " + product.getProductCost());
+        if (product.getProductDiscount() != 0) {
+            textViewProductCost.setText("USD " + product.getProductCost());
+            textViewProductCost.setTextColor(ContextCompat.getColor(this, R.color.red));
+            textViewProductCost.setPaintFlags(textViewProductCost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            textViewProductAfterDiscountCost.setText("USD " + (product.getProductCost() - product.getProductDiscount()) + " (After Discount)");
+        } else
+            textViewProductCost.setText("USD " + product.getProductCost());
 
         if (product.getProductFoto1() != null)
             addImage(product.getProductFoto1(), 0);

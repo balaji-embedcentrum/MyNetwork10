@@ -61,7 +61,7 @@ public class ProductListRecyclerAdapter extends RecyclerView.Adapter<ProductList
         //Setting text view name and address
         customViewHolder.textViewSummery.setText(product.getProductSummary());
         customViewHolder.textViewDescription.setText(product.getProductDescription());
-        customViewHolder.textViewCost.setText("$ " + String.valueOf(product.getProductCost()));
+        customViewHolder.textViewCost.setText("$ " + String.valueOf(String.format("%1.2f", (product.getProductCost() - product.getProductDiscount()))));
 
         String imageUrl = "";
         if (product.getProductFoto3() != null)

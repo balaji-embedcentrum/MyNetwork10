@@ -165,6 +165,21 @@
                     android:paddingRight="20dp" />
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/DiscountWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/textViewDiscount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Discount ($)"
+                    android:inputType="numberDecimal"
+                    android:paddingRight="20dp" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <View
                 android:layout_width="match_parent"
